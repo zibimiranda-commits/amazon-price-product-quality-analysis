@@ -12,7 +12,7 @@
 
 ---
 
-## 🎯 Objectif du projet
+# 🎯 Objectif du projet
 
 L'objectif est d'analyser les données produits et les avis clients afin d'étudier la relation entre :
 
@@ -27,22 +27,22 @@ L'analyse cherchera notamment à déterminer si les produits fortement remisés 
 
 # 🔎 Axes d'analyse
 
-### 1. Prix et satisfaction
+### 1. 💰 Prix et satisfaction
 
 Étudier la relation entre le niveau de remise et les évaluations obtenues par les produits.
 
-### 2. Effet d'aubaine vs qualité intrinsèque
+### 2. ⭐ Effet d'aubaine vs qualité intrinsèque
 
 Analyser les avis clients afin de rechercher si les évaluations positives semblent davantage associées :
 
 - au prix et au rapport qualité-prix ;
 - ou aux qualités intrinsèques du produit : performance, fiabilité, durabilité, facilité d'utilisation, etc.
 
-### 3. Remises et engagement client
+### 3. 📊 Remises et engagement client
 
 Examiner la relation entre les remises, les évaluations et le volume d'avis afin d'identifier d'éventuelles tendances dans le comportement des clients.
 
-### 4. Identification des signaux de faiblesse
+### 4. 💬 Identification des signaux de faiblesse
 
 Explorer le contenu des avis afin d'identifier les problèmes récurrents pouvant concerner :
 
@@ -54,7 +54,7 @@ Explorer le contenu des avis afin d'identifier les problèmes récurrents pouvan
 - la conformité du produit ;
 - ou d'autres éléments susceptibles d'influencer la satisfaction.
 
-### 5. Recommandations
+### 5. 💡 Recommandations
 
 À partir des résultats obtenus, formuler des recommandations permettant d'identifier les leviers d'amélioration potentiels du produit et de mieux comprendre le rôle des promotions dans la perception de la valeur.
 
@@ -62,148 +62,108 @@ Explorer le contenu des avis afin d'identifier les problèmes récurrents pouvan
 
 # 🛠️ 1. Préparation et nettoyage des données — Power Query
 
-## 📸 Aperçu du jeu de données brut
+## 📌 Source et structure initiale des données
 
-Le jeu de données initial regroupe dans une même structure les informations relatives aux utilisateurs, aux produits, aux prix, aux évaluations ainsi qu'aux avis clients.
+Le jeu de données utilisé dans ce projet provient de **Kaggle**.
+
+**Nom du dataset :** `Amazon Sales Dataset`  
+**Format :** fichier CSV  
+**Structure initiale :**
+
+- **1 465 lignes**
+- **16 colonnes**
+
+Le jeu de données brut regroupe dans une même structure des informations relatives aux produits, aux prix, aux catégories, aux évaluations ainsi qu'aux avis clients.
+
+La structure initiale présentait notamment plusieurs informations d'avis regroupées dans une même ligne, avec plusieurs utilisateurs et plusieurs avis pouvant être associés à un même produit.
+
+Cette organisation nécessitait donc une phase de préparation et de restructuration avant la modélisation.
+
+### 📸 Structure initiale du jeu de données
 
 ![Structure initiale des données](Screenshot%20(102).png)
 
-Cette structure initiale nécessite plusieurs transformations afin de préparer les données à l'analyse et de séparer les informations produits des informations relatives aux avis clients.
+---
 
-## Typage et normalisation
+## 🔢 Typage et normalisation des données
 
-- Conversion de `actual_price` et `discounted_price` en **nombre décimal fixe** après suppression des symboles monétaires.
-- Conversion de `discount_percentage` en **nombre décimal**.
-- Conservation de `rating` en **nombre décimal**.
-- Conservation de `rating_count` en **nombre entier**.
-- Suppression des lignes présentant des erreurs ou des valeurs manquantes problématiques.
+La première étape a consisté à vérifier et adapter les types de données dans Power Query.
 
-## 🔍 Profilage et contrôle de la qualité
+### `actual_price` et `discounted_price`
 
-Utilisation des fonctionnalités de profilage de Power Query afin d'identifier les valeurs valides, les valeurs vides et les erreurs.
+- Suppression des symboles monétaires.
+- Conversion du type **Texte** en **nombre décimal fixe**, adapté aux données monétaires.
 
-- Identification des valeurs manquantes dans `rating_count`.
-- Identification et suppression de la ligne contenant une erreur dans `rating`.
-- Analyse de la distribution de `product_id`.
-- Identification des doublons à partir de `product_id`.
-- Vérification des lignes dupliquées avant leur suppression.
-- Suppression des doublons lorsque les informations produit étaient identiques.
+### `discount_percentage`
 
-## 🗂️ Restructuration des catégories
+- Conversion du type de données en **nombre décimal**.
 
-La colonne `category` contenait plusieurs niveaux hiérarchiques concaténés et séparés par le délimiteur `|`.
+### `rating`
 
-Une séparation de la colonne a permis d'identifier les différents niveaux de classification.
+- Conservation du type **nombre décimal**, déjà adapté aux valeurs de notation.
 
-Les quatre niveaux pertinents ont été conservés et renommés :
+### `rating_count`
 
-- `main_category`
-- `sub_category`
-- `product_family`
-- `product_category`
-
-La cinquième colonne, présentant une proportion importante de valeurs vides, a été supprimée.
-
-Les noms des catégories ont également été harmonisés afin de garantir une nomenclature cohérente.
-
-## 💬 Restructuration des avis clients
-
-Les informations relatives aux utilisateurs et aux avis étaient regroupées dans une même ligne et pouvaient contenir plusieurs valeurs.
-
-Une table dédiée `reviews` a donc été créée afin de restructurer ces informations.
-
-Les étapes réalisées comprennent :
-
-- Séparation des informations `user_id`, `user_name`, `review_id`, `review_title` et `review_content`.
-- Fractionnement des chaînes de caractères à l'aide de délimiteurs.
-- Traitement des colonnes supplémentaires générées lors du fractionnement.
-- Fusion des éléments nécessaires afin de conserver les informations complètes des avis.
-- **Dépivotage** des données avec `product_id` comme colonne d'ancrage.
-- Fractionnement de la colonne `Attribute`.
-- **Pivotage** de la colonne `Attribute.1` afin de reconstruire les attributs sous forme de colonnes.
-- Reconstruction des champs :
-  - `user_id`
-  - `user_name`
-  - `review_id`
-  - `review_title`
-  - `review_content`
-- Suppression des colonnes devenues inutiles après le pivotage.
-- Suppression des lignes vides ou ne contenant pas d'informations d'avis.
-
-### 📌 Granularité de la table `reviews`
-
-La restructuration permet d'obtenir le niveau de détail suivant :
-
-> **1 ligne = 1 avis d'un utilisateur sur 1 produit.**
-
-Un même produit peut donc être associé à plusieurs utilisateurs et plusieurs avis.
-
-## 🧹 Nettoyage final
-
-- Suppression des espaces inutiles à l'aide de la fonction `TRIM`.
-- Vérification de la cohérence des données textuelles.
-- Contrôle de la structure finale des tables `Products` et `reviews`.
-- Vérification de la cohérence et de l'intégrité globale du jeu de données.
+- Conservation du type **nombre entier**.
 
 ---
 
-# 📊 2. Modélisation des données — Power BI
+## 🔍 Profilage et contrôle de la qualité des données
 
-*Cette section sera complétée lors de la phase de modélisation.*
+Les fonctionnalités de profilage de Power Query ont été utilisées afin d'identifier les valeurs valides, les valeurs vides, les erreurs et les éventuels doublons.
 
-Les éléments abordés seront notamment :
+### `rating_count`
 
-- création du modèle de données ;
-- définition des relations entre les tables ;
-- construction du modèle en étoile ;
-- définition de la hiérarchie des catégories ;
-- préparation des données nécessaires à l'analyse.
+Le profilage a révélé environ **1 % de valeurs vides**.
 
----
+- Identification des lignes concernées.
+- Suppression des **2 lignes vides**.
 
-# 📈 3. Analyse — Power BI
+### `rating`
 
-*Section à compléter après la modélisation.*
+Le profilage a révélé environ **1 % de valeurs en erreur**.
 
-L'analyse portera notamment sur :
-
-- la relation entre prix, remises et évaluations ;
-- le rapport entre niveau de remise et volume d'avis ;
-- l'analyse des avis clients ;
-- l'identification des thèmes associés à la satisfaction et aux éventuelles faiblesses produit ;
-- la comparaison entre différents segments de produits.
+- Identification de la ligne concernée.
+- Suppression de la ligne contenant l'erreur.
 
 ---
 
-# 💡 4. Recommandations
+## 🔎 Identification et traitement des doublons
 
-*Section à compléter après l'analyse des résultats.*
+La distribution de `product_id` a initialement montré :
 
-Les recommandations seront formulées à partir des tendances et relations réellement observées dans les données.
+- **1 351 valeurs distinctes**
+- **1 259 valeurs uniques**
+
+La fonctionnalité **Keep Duplicates** de Power Query a été utilisée afin d'observer les doublons avant leur suppression.
+
+L'analyse des lignes concernées a montré que certains `product_id` apparaissaient deux fois avec des informations produit identiques ou très similaires, notamment :
+
+- le nom du produit ;
+- le prix actuel ;
+- le prix remisé ;
+- le niveau de remise.
+
+Les différences observées concernaient principalement les informations relatives aux avis.
+
+Après vérification, ces lignes ont été considérées comme des doublons au niveau de la table produit.
+
+Les doublons ont donc été supprimés sur l'ensemble des lignes.
+
+Après nettoyage :
+
+- **1 351 valeurs distinctes**
+- **1 351 valeurs uniques**
+
+La colonne `product_id` constitue ainsi un identifiant unique dans la table `Products`.
 
 ---
 
-# 🧰 Outils utilisés
+# 🗂️ Restructuration des catégories
 
-- **Power Query** — préparation, transformation et nettoyage des données
-- **Power BI** — modélisation, analyse et visualisation
-- **DAX** — mesures et indicateurs analytiques
-- **NLP / Text Analysis** — analyse exploratoire du contenu des avis clients
+La colonne `category` contenait plusieurs niveaux de classification concaténés et séparés par le caractère `|`.
 
----
-
-# 📁 Structure du projet
+Exemple de structure :
 
 ```text
-amazon-price-product-quality-analysis/
-│
-├── data/
-│   └── dataset
-│
-├── powerbi/
-│   └── amazon_analysis.pbix
-│
-├── README.md
-│
-└── screenshots/
-    └── portfolio/
+Main category | Sub category | Product family | Product category | ...
