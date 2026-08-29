@@ -62,6 +62,14 @@ Explorer le contenu des avis afin d'identifier les problèmes récurrents pouvan
 
 # 🛠️ 1. Préparation et nettoyage des données — Power Query
 
+## 📸 Aperçu du jeu de données brut
+
+Le jeu de données initial regroupe dans une même structure les informations relatives aux utilisateurs, aux produits, aux prix, aux évaluations ainsi qu'aux avis clients.
+
+![Structure initiale des données](Screenshot%20(102).png)
+
+Cette structure initiale nécessite plusieurs transformations afin de préparer les données à l'analyse et de séparer les informations produits des informations relatives aux avis clients.
+
 ## Typage et normalisation
 
 - Conversion de `actual_price` et `discounted_price` en **nombre décimal fixe** après suppression des symboles monétaires.
