@@ -111,6 +111,9 @@ La première étape a consisté à vérifier et adapter les types de données da
 ## 🔍 Profilage et contrôle de la qualité des données
 
 Les fonctionnalités de profilage de Power Query ont été utilisées afin d'identifier les valeurs valides, les valeurs vides, les erreurs et les éventuels doublons.
+### 📸 Contrôle de la qualité des données
+
+![Profilage et qualité des données](Data_Quality.png)
 
 ### `rating_count`
 
