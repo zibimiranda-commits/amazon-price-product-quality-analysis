@@ -222,6 +222,10 @@ La restructuration permet d'obtenir le niveau de détail suivant :
 
 Un même produit peut donc être associé à plusieurs utilisateurs et plusieurs avis.
 
+### 📸 Résultat final de la table reviews (Normalisation)
+
+![Résultat de la restructuration de la table reviews](reviews_transformation.png)
+
 ## 🧹 Nettoyage final
 
 - Suppression des espaces inutiles à l'aide de la fonction `TRIM`.
