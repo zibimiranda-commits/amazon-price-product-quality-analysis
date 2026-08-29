@@ -168,12 +168,14 @@ La colonne `product_id` constitue ainsi un identifiant unique dans la table `Pro
 
 # 🗂️ Restructuration des catégories
 
-La colonne initiale`category` contenait plusieurs niveaux de classification concaténés et séparés par le caractère `|`. Elle a été divisée pour créer des axes d'analyse distincts et réutilisables dans le modèle de données.
+La colonne initiale `category` contenait plusieurs niveaux de classification concaténés et séparés par le caractère `|`. Elle a été divisée pour créer des axes d'analyse distincts et réutilisables dans le modèle de données.
 
 Exemple de structure :
 
 ```text
-Main category | Sub category | Product family | Product category | ...
+Main category | Sub category | Product family | Product category | ....
+```
+
 ### 📸 Traitement et séparation des catégories (Split Column)
 
 ![Séparation de la colonne category](category_split.png)
