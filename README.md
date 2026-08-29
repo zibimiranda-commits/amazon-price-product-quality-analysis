@@ -139,6 +139,10 @@ La distribution de `product_id` a initialement montré :
 - **1 259 valeurs uniques**
 
 La fonctionnalité **Keep Duplicates** de Power Query a été utilisée afin d'observer les doublons avant leur suppression.
+### 📸 Identification des doublons via la fonction Keep Duplicates
+
+![Observation des doublons sur product_id](Duplicate_identification.png)
+
 
 L'analyse des lignes concernées a montré que certains `product_id` apparaissaient deux fois avec des informations produit identiques ou très similaires, notamment :
 
