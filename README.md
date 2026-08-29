@@ -205,6 +205,10 @@ Les étapes réalisées comprennent :
 - **Dépivotage** des données avec `product_id` comme colonne d'ancrage.
 - Fractionnement de la colonne `Attribute`.
 - **Pivotage** de la colonne `Attribute.1` afin de reconstruire les attributs sous forme de colonnes.
+
+  ### 📸 Focus technique : Processus de Dépivotage et Pivotage (Unpivot & Pivot)
+
+![Processus de dépivotage et pivotage des avis](unpivot_pivot_process.png)
 - Reconstruction des champs :
   - `user_id`
   - `user_name`
