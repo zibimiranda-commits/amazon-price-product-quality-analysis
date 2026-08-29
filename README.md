@@ -208,7 +208,7 @@ Les étapes réalisées comprennent :
 
   ### 📸 Focus technique : Processus de Dépivotage et Pivotage (Unpivot & Pivot)
 
-![Processus de dépivotage et pivotage des avis](unpivot_pivot_processus.png)
+![Processus de dépivotage et pivotage des avis](unpivot_pivot_process.png)
 - Reconstruction des champs :
   - `user_id`
   - `user_name`
