@@ -168,9 +168,124 @@ La colonne `product_id` constitue ainsi un identifiant unique dans la table `Pro
 
 # 🗂️ Restructuration des catégories
 
-La colonne `category` contenait plusieurs niveaux de classification concaténés et séparés par le caractère `|`.
+La colonne initiale`category` contenait plusieurs niveaux de classification concaténés et séparés par le caractère `|`. Elle a été divisée pour créer des axes d'analyse distincts et réutilisables dans le modèle de données.
 
 Exemple de structure :
 
 ```text
 Main category | Sub category | Product family | Product category | ...
+### 📸 Traitement et séparation des catégories (Split Column)
+
+![Séparation de la colonne category](category_split.png)
+Les quatre niveaux pertinents ont été conservés et renommés :
+
+- `main_category`
+- `sub_category`
+- `product_family`
+- `product_category`
+
+La cinquième colonne, présentant une proportion importante de valeurs vides, a été supprimée.
+
+Les noms des catégories ont également été harmonisés afin de garantir une nomenclature cohérente.
+
+## 💬 Restructuration des avis clients
+
+Les informations relatives aux utilisateurs et aux avis étaient regroupées dans une même ligne et pouvaient contenir plusieurs valeurs.
+
+Une table dédiée `reviews` a donc été créée afin de restructurer ces informations.
+
+Les étapes réalisées comprennent :
+
+- Séparation des informations `user_id`, `user_name`, `review_id`, `review_title` et `review_content`.
+- Fractionnement des chaînes de caractères à l'aide de délimiteurs.
+- Traitement des colonnes supplémentaires générées lors du fractionnement.
+- Fusion des éléments nécessaires afin de conserver les informations complètes des avis.
+- **Dépivotage** des données avec `product_id` comme colonne d'ancrage.
+- Fractionnement de la colonne `Attribute`.
+- **Pivotage** de la colonne `Attribute.1` afin de reconstruire les attributs sous forme de colonnes.
+- Reconstruction des champs :
+  - `user_id`
+  - `user_name`
+  - `review_id`
+  - `review_title`
+  - `review_content`
+- Suppression des colonnes devenues inutiles après le pivotage.
+- Suppression des lignes vides ou ne contenant pas d'informations d'avis.
+
+### 📌 Granularité de la table `reviews`
+
+La restructuration permet d'obtenir le niveau de détail suivant :
+
+> **1 ligne = 1 avis d'un utilisateur sur 1 produit.**
+
+Un même produit peut donc être associé à plusieurs utilisateurs et plusieurs avis.
+
+## 🧹 Nettoyage final
+
+- Suppression des espaces inutiles à l'aide de la fonction `TRIM`.
+- Vérification de la cohérence des données textuelles.
+- Contrôle de la structure finale des tables `Products` et `reviews`.
+- Vérification de la cohérence et de l'intégrité globale du jeu de données.
+
+---
+
+# 📊 2. Modélisation des données — Power BI
+
+*Cette section sera complétée lors de la phase de modélisation.*
+
+Les éléments abordés seront notamment :
+
+- création du modèle de données ;
+- définition des relations entre les tables ;
+- construction du modèle en étoile ;
+- définition de la hiérarchie des catégories ;
+- préparation des données nécessaires à l'analyse.
+
+---
+
+# 📈 3. Analyse — Power BI
+
+*Section à compléter après la modélisation.*
+
+L'analyse portera notamment sur :
+
+- la relation entre prix, remises et évaluations ;
+- le rapport entre niveau de remise et volume d'avis ;
+- l'analyse des avis clients ;
+- l'identification des thèmes associés à la satisfaction et aux éventuelles faiblesses produit ;
+- la comparaison entre différents segments de produits.
+
+---
+
+# 💡 4. Recommandations
+
+*Section à compléter après l'analyse des résultats.*
+
+Les recommandations seront formulées à partir des tendances et relations réellement observées dans les données.
+
+---
+
+# 🧰 Outils utilisés
+
+- **Power Query** — préparation, transformation et nettoyage des données
+- **Power BI** — modélisation, analyse et visualisation
+- **DAX** — mesures et indicateurs analytiques
+- **NLP / Text Analysis** — analyse exploratoire du contenu des avis clients
+
+---
+
+# 📁 Structure du projet
+
+```text
+amazon-price-product-quality-analysis/
+│
+├── data/
+│   └── dataset
+│
+├── powerbi/
+│   └── amazon_analysis.pbix
+│
+├── README.md
+│
+└── screenshots/
+    └── portfolio/
