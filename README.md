@@ -348,6 +348,8 @@ Products (1) ─────────── (*) Reviews
 ### 📸 Vérification du filtrage entre Products et reviews
 Un test de filtrage a été réalisé afin de vérifier le fonctionnement de la relation Products → reviews. La sélection d'un produit dans la table Products filtre correctement les avis associés dans la table.
 
+![Vérification de la relation](test_filtre.png)
+
 # 📈 3. Analyse — Power BI
 
 *Section à compléter après la modélisation.*
