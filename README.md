@@ -159,8 +159,8 @@ Les doublons ont donc été supprimés sur l'ensemble des lignes.
 
 Après nettoyage :
 
-- **1 351 valeurs distinctes**
-- **1 351 valeurs uniques**
+- **1 348 valeurs distinctes**
+- **1 348 valeurs uniques**
 
 La colonne `product_id` constitue ainsi un identifiant unique dans la table `Products`.
 
@@ -241,17 +241,113 @@ Un même produit peut donc être associé à plusieurs utilisateurs et plusieurs
 
 # 📊 2. Modélisation des données — Power BI
 
-*Cette section sera complétée lors de la phase de modélisation.*
+Après la préparation et le nettoyage des données dans Power Query, la phase de modélisation a été réalisée dans Power BI Desktop.
 
-Les éléments abordés seront notamment :
-
-- création du modèle de données ;
-- définition des relations entre les tables ;
-- construction du modèle en étoile ;
-- définition de la hiérarchie des catégories ;
-- préparation des données nécessaires à l'analyse.
+L'objectif de cette étape est de structurer les données afin de permettre une analyse fiable des produits, des évaluations et des avis clients.
 
 ---
+
+## 🗂️ Structure du modèle
+
+Le modèle repose actuellement sur deux tables principales :
+
+### `Products`
+
+La table `Products` constitue la table de référence des produits.
+
+**Granularité :**
+
+> **1 ligne = 1 produit**
+
+La colonne `product_id` constitue l'identifiant unique du produit.
+
+Après nettoyage, la table contient actuellement **1 348 produits distincts**.
+
+Elle contient notamment les informations relatives :
+
+- aux produits ;
+- aux catégories ;
+- aux prix ;
+- aux remises ;
+- aux évaluations ;
+- au volume d'évaluations.
+
+---
+
+### `Reviews`
+
+La table `Reviews` contient les informations relatives aux avis clients.
+
+**Granularité :**
+
+> **1 ligne = 1 avis associé à 1 produit et à 1 utilisateur.**
+
+Un même produit peut donc apparaître plusieurs fois dans cette table lorsqu'il possède plusieurs avis.
+
+Les principales informations conservées sont :
+
+- `product_id`
+- `user_id`
+- `user_name`
+- `review_id`
+- `review_title`
+- `review_content`
+
+Cette structure permettra notamment d'exploiter ultérieurement le contenu textuel des avis.
+
+---
+
+# ⚙️ Configuration des propriétés des colonnes
+
+Après le chargement des données dans Power BI Desktop, les propriétés des colonnes ont été vérifiées et configurées afin de garantir une utilisation cohérente des champs dans le modèle et les visualisations.
+
+Les principaux contrôles ont porté sur :
+
+- le type de données ;
+- le format d'affichage ;
+- la catégorie de données ;
+- les propriétés des champs numériques et textuels.
+
+### 💰 Champs monétaires
+
+Les colonnes :
+
+- `actual_price`
+- `discounted_price`
+
+ont été configurées comme des valeurs numériques monétaires afin de permettre leur utilisation dans les calculs et les visualisations.
+
+### 📊 Champs numériques
+
+Les champs numériques ont été vérifiés afin de garantir leur comportement approprié dans les agrégations :
+
+- `rating` → nombre décimal ;
+- `rating_count` → nombre entier ;
+- `discount_percentage` → nombre décimal / pourcentage selon son utilisation dans le rapport.
+
+### 🔑 Identifiants
+
+Les champs d'identification tels que :
+
+- `product_id`
+- `user_id`
+- `review_id`
+
+sont conservés comme des champs textuels, car ils servent d'identifiants et non de valeurs destinées à être additionnées ou moyennées.
+
+---
+
+# 🔗 Relation entre les tables
+
+Une relation a été établie entre les deux tables à partir de la colonne `product_id`.
+
+```text
+Products (1) ─────────── (*) Reviews
+---
+
+### 📸 Vérification du filtrage entre Products et reviews
+Un test de filtrage a été réalisé afin de vérifier le fonctionnement de la relation Products → reviews. La sélection d'un produit dans la table Products filtre correctement les avis associés dans la table.
+
 
 # 📈 3. Analyse — Power BI
 
