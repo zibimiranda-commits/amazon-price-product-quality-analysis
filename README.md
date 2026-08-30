@@ -350,7 +350,6 @@ Un test de filtrage a été réalisé afin de vérifier le fonctionnement de la 
 
 ![Vérification de la relation](test_filtre.png)
 
-
 # 📈 3. Analyse — Power BI
 
 *Section à compléter après la modélisation.*
