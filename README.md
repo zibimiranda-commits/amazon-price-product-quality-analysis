@@ -381,7 +381,125 @@ Ces mesures constituent la base de l'analyse. Elles seront ensuite complétées 
 
 Cette mesure permet de calculer la note moyenne des produits du catalogue.
 
-```DAX
+Valeur observée : 4,09
+
+Cette mesure constitue l'indicateur de référence pour évaluer la satisfaction moyenne associée aux produits et permettra notamment de comparer les niveaux de satisfaction selon les catégories et les niveaux de remise.
+
+## 💰 2. Prix et remises
+Average Actual Price
+
+Cette mesure calcule le prix moyen des produits avant remise.
+
+Average Actual Price = AVERAGE(Products[actual_price])
+
+Valeur observée : environ 5,70 K
+
+Elle servira de référence pour comparer le niveau de prix initial des produits et analyser leur positionnement tarifaire.
+
+Average Discounted Price
+
+Cette mesure calcule le prix moyen effectivement proposé après remise.
+
+Average Discounted Price = AVERAGE(Products[discounted_price])
+
+Valeur observée : environ 3,31 K
+
+Elle permet de comparer le prix moyen avant et après remise et de mieux comprendre l'amplitude des réductions appliquées.
+
+Average Discount
+
+Cette mesure calcule la remise moyenne observée sur l'ensemble du catalogue.
+
+Average Discount = AVERAGE(Products[discount_percentage])
+
+Valeur observée : 0,47
+
+Cette mesure permettra notamment d'étudier la relation entre le niveau de remise et la satisfaction des clients.
+
+Remarque : la valeur 0,47 correspond à une remise moyenne de 47 % lorsque la colonne est stockée sous forme décimale. Le format d'affichage pourra être configuré en pourcentage dans Power BI.
+
+##📊 3. Volume de produits et engagement client
+Product Count
+
+Cette mesure compte le nombre de produits présents dans la table Products.
+
+Product Count = COUNTROWS(Products)
+
+Valeur observée : 1,35 K
+
+La valeur est affichée sous forme abrégée dans la carte Power BI (1,35 K), mais correspond à 1 348 produits.
+
+Cette mesure permettra de contrôler le nombre de produits analysés et de comparer les différents segments du catalogue.
+
+Total Rating Count
+
+Cette mesure calcule le nombre total d'évaluations associées aux produits.
+
+Total Rating Count = SUM(Products[rating_count])
+
+Elle permet de mesurer le volume global d'évaluations et constitue un indicateur d'engagement client disponible au niveau produit.
+
+Elle sera notamment utilisée pour étudier si les produits bénéficiant de remises importantes semblent également concentrer davantage d'évaluations.
+
+Average Rating Count
+
+Cette mesure calcule le nombre moyen d'évaluations par produit.
+
+Average Rating Count = AVERAGE(Products[rating_count])
+
+Valeur observée : environ 17,66 K
+
+Elle permet de comparer l'engagement moyen associé aux produits indépendamment du nombre total de produits analysés.
+
+##💬 4. Avis clients
+
+Les mesures suivantes s'appuient sur la table Reviews, dont la granularité est :
+
+1 ligne = 1 avis associé à 1 produit et à 1 utilisateur.
+
+Reviews Count
+
+Cette mesure compte le nombre total de lignes présentes dans la table Reviews.
+
+Reviews Count = COUNTROWS(Reviews)
+
+Valeur observée : environ 11 K
+
+Elle permet de mesurer le nombre d'avis textuels disponibles dans le jeu de données.
+
+Distinct Review Count
+
+Cette mesure compte le nombre d'identifiants d'avis différents.
+
+Distinct Review Count = DISTINCTCOUNT(Reviews[review_id])
+
+Valeur observée : environ 9 K
+
+Elle permet de contrôler le nombre d'avis distincts disponibles et d'éviter de considérer plusieurs occurrences d'un même identifiant comme plusieurs avis différents.
+
+Distinct User Count
+
+Cette mesure compte le nombre d'utilisateurs distincts ayant laissé des avis dans le jeu de données.
+
+Distinct User Count = DISTINCTCOUNT(Reviews[user_id])
+
+Valeur observée : environ 9 K
+
+Elle permettra notamment d'étudier la diversité des utilisateurs et l'engagement client.
+
+📌 Synthèse des mesures de référence
+Axe	Mesure	Table	Rôle
+⭐ Satisfaction	Average Rating	Products	Mesurer la note moyenne
+💰 Prix	Average Actual Price	Products	Mesurer le prix moyen avant remise
+💰 Prix	Average Discounted Price	Products	Mesurer le prix moyen après remise
+💰 Remise	Average Discount	Products	Mesurer la remise moyenne
+📦 Produits	Product Count	Products	Compter les produits analysés
+📊 Engagement	Total Rating Count	Products	Mesurer le volume total d'évaluations
+📊 Engagement	Average Rating Count	Products	Mesurer le nombre moyen d'évaluations par produit
+💬 Avis	Reviews Count	Reviews	Compter les avis disponibles
+💬 Avis	Distinct Review Count	Reviews	Compter les avis distincts
+👤 Utilisateurs	Distinct User Count	Reviews	Compter les utilisateurs distincts
+🔎 Passage aux mesures analytiques
 Average Rating = AVERAGE(Products[rating])
 ---
 
