@@ -488,17 +488,20 @@ Valeur observée : environ 9 K
 Elle permettra notamment d'étudier la diversité des utilisateurs et l'engagement client.
 
 📌 Synthèse des mesures de référence
-Axe	Mesure	Table	Rôle
-⭐ Satisfaction	Average Rating	Products	Mesurer la note moyenne
-💰 Prix	Average Actual Price	Products	Mesurer le prix moyen avant remise
-💰 Prix	Average Discounted Price	Products	Mesurer le prix moyen après remise
-💰 Remise	Average Discount	Products	Mesurer la remise moyenne
-📦 Produits	Product Count	Products	Compter les produits analysés
-📊 Engagement	Total Rating Count	Products	Mesurer le volume total d'évaluations
-📊 Engagement	Average Rating Count	Products	Mesurer le nombre moyen d'évaluations par produit
-💬 Avis	Reviews Count	Reviews	Compter les avis disponibles
-💬 Avis	Distinct Review Count	Reviews	Compter les avis distincts
-👤 Utilisateurs	Distinct User Count	Reviews	Compter les utilisateurs distincts
+
+| Axe | Mesure | Table | Rôle |
+| :--- | :--- | :--- | :--- |
+| ⭐ Satisfaction | Average Rating | Products | Mesurer la note moyenne |
+| 💰 Prix | Average Actual Price | Products | Mesurer le prix moyen avant remise |
+| 💰 Prix | Average Discounted Price | Products | Mesurer le prix moyen après remise |
+| 💰 Remise | Average Discount | Products | Mesurer la remise moyenne |
+| 📦 Produits | Product Count | Products | Compter les produits analysés |
+| 📊 Engagement | Total Rating Count | Products | Mesurer le volume total d'évaluations |
+| 📊 Engagement | Average Rating Count | Products | Mesurer le nombre moyen d'évaluations par produit |
+| 💬 Avis | Reviews Count | Reviews | Compter les avis disponibles |
+| 💬 Avis | Distinct Review Count | Reviews | Compter les avis distincts |
+| 👤 Utilisateurs | Distinct User Count | Reviews | Compter les utilisateurs distincts |
+
 🔎 Passage aux mesures analytiques
 Average Rating = AVERAGE(Products[rating])
 ---
