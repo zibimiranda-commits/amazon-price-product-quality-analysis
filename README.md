@@ -365,7 +365,6 @@ Un test de filtrage a été réalisé afin de vérifier le fonctionnement de la 
 ![Vérification de la relation](test_filtre.png)
 
 ---
-
 # 🧮 Création des mesures DAX
 
 Après la mise en place du modèle de données et la vérification de la relation entre `Products` et `Reviews`, une première série de mesures DAX a été créée.
@@ -413,14 +412,11 @@ Elle permet de comparer le prix moyen avant et après remise et de mieux compren
 Average Discount
 
 Cette mesure calcule la remise moyenne observée sur l'ensemble du catalogue.
-
 Average Discount = AVERAGE(Products[discount_percentage])
 
-Valeur observée : 0,47
+Valeur observée : 47%
 
 Cette mesure permettra notamment d'étudier la relation entre le niveau de remise et la satisfaction des clients.
-
-Remarque : la valeur 0,47 correspond à une remise moyenne de 47 % lorsque la colonne est stockée sous forme décimale. Le format d'affichage pourra être configuré en pourcentage dans Power BI.
 
 📊 3. Volume de produits et engagement client
 Product Count
@@ -503,34 +499,7 @@ Axe	Mesure	Table	Rôle
 💬 Avis	Reviews Count	Reviews	Compter les avis disponibles
 💬 Avis	Distinct Review Count	Reviews	Compter les avis distincts
 👤 Utilisateurs	Distinct User Count	Reviews	Compter les utilisateurs distincts
-
 🔎 Passage aux mesures analytiques
-
-Les mesures précédentes constituent des indicateurs de référence. Elles ne permettent pas encore, à elles seules, de répondre à la problématique métier.
-
-La prochaine étape consiste donc à créer des mesures analytiques permettant de mettre en relation ces indicateurs.
-
-L'analyse cherchera notamment à étudier :
-
-le niveau de satisfaction selon le niveau de remise ;
-le volume d'évaluations selon le niveau de remise ;
-le nombre d'avis selon les différents segments de produits ;
-les différences de comportement entre catégories ;
-les éventuels écarts entre prix, remises et satisfaction ;
-puis, dans une étape ultérieure, le contenu des avis clients afin d'identifier les thèmes liés au prix, à la qualité, à la performance, à la durabilité et aux éventuels problèmes rencontrés.
-
-Important : les mesures analytiques devront être construites progressivement afin de respecter la problématique métier et de ne pas tirer de conclusion avant l'analyse des données.
-# 📈 3. Analyse — Power BI
-
-*Section à compléter après la modélisation.*
-
-L'analyse portera notamment sur :
-
-- la relation entre prix, remises et évaluations ;
-- le rapport entre niveau de remise et volume d'avis ;
-- l'analyse des avis clients ;
-- l'identification des thèmes associés à la satisfaction et aux éventuelles faiblesses produit ;
-- la comparaison entre différents segments de produits.
 
 ---
 
