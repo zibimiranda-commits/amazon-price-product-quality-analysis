@@ -240,6 +240,8 @@ La fonctionnalité Keep Duplicates de Power Query a été utilisée afin d'isole
 
 ### 📸 Identification des doublons via Keep Duplicates
 
+![Duplicate Identification](Duplicate_identification.png)
+
 L'analyse a montré que certains product_id apparaissaient plusieurs fois avec des informations produit identiques ou très similaires, notamment concernant :
 
 le nom du produit ;
@@ -271,7 +273,7 @@ La colonne product_id constitue ainsi l'identifiant unique de la table Products.
 
 La différence entre les valeurs observées à certaines étapes intermédiaires du nettoyage et les 1 348 produits finaux résulte de l'ensemble du processus de nettoyage, et ne doit pas être attribuée uniquement à la suppression des doublons.
 
-🗂️ Restructuration des catégories
+# 🗂️ Restructuration des catégories
 
 La colonne initiale category contenait plusieurs niveaux de classification concaténés et séparés par le caractère |.
 
@@ -296,7 +298,7 @@ Elle a donc été supprimée.
 
 Les libellés des catégories ont également été harmonisés afin d'améliorer la cohérence de la nomenclature utilisée dans le rapport.
 
-💬 Restructuration des avis clients
+# 💬 Restructuration des avis clients
 
 Les informations relatives aux utilisateurs et aux avis étaient initialement regroupées dans plusieurs colonnes pouvant contenir plusieurs valeurs pour un même produit.
 
