@@ -181,7 +181,7 @@ La colonne a été convertie en valeur numérique décimale afin de permettre so
 
 Une valeur telle que :
 
-```text
+
 0.47
 correspond ainsi à :
 
@@ -189,11 +189,11 @@ correspond ainsi à :
 
 lorsque le champ est formaté en pourcentage dans Power BI.
 
-rating
+### rating
 
 La colonne rating a été configurée comme nombre décimal afin de permettre les calculs de moyenne et les comparaisons entre produits.
 
-rating_count
+### rating_count
 
 La colonne rating_count a été configurée comme nombre entier.
 
