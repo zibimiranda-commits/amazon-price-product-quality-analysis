@@ -320,6 +320,8 @@ suppression des lignes vides ou ne contenant pas d'informations exploitables.
 
 ### 📸 Focus technique — Unpivot & Pivot
 
+![Unpivot Pivot Process](unpivot_pivot_process.png)
+
 Les principaux champs reconstruits comprennent :
 
 product_id
@@ -352,6 +354,8 @@ et :
 Distinct Review Count = DISTINCTCOUNT(Reviews[review_id])
 
 ### 📸 Résultat final de la normalisation
+
+![Reviews Transformation](reviews_transformation.png)
 
 🧠 Classification exploratoire des avis dans Power Query
 
@@ -634,6 +638,8 @@ Ainsi :
 un produit apparaît une seule fois dans Products ;
 un produit peut être associé à plusieurs lignes dans Reviews.
 📸 Vérification du filtrage
+
+![Test Filtre](test_filtre.png)
 
 Un test a été réalisé afin de vérifier que la sélection d'un produit dans Products filtre correctement les avis associés dans Reviews.
 
