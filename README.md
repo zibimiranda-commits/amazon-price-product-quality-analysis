@@ -212,6 +212,8 @@ les éventuels doublons ;
 la distribution des principales colonnes.
 📸 Contrôle de la qualité des données
 
+![Data Quality](Data_Quality.png)
+
 rating_count
 
 Le profilage a identifié 2 valeurs vides dans la colonne rating_count.
