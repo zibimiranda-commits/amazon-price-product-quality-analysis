@@ -285,6 +285,8 @@ Main category | Sub category | Product family | Product category | ...
 
 ### 📸 Traitement et séparation des catégories
 
+![Category Split](category_split.png)
+
 Les quatre niveaux retenus ont été renommés :
 
 main_category
