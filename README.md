@@ -201,7 +201,7 @@ Elle représente le nombre d'évaluations associé au produit dans le dataset.
 
 Elle ne doit pas être confondue avec le nombre d'avis textuels présents dans la table Reviews.
 
-🔍 Profilage et contrôle de la qualité des données
+## 🔍 Profilage et contrôle de la qualité des données
 
 Les fonctionnalités de profilage de Power Query ont été utilisées afin d'identifier :
 
@@ -210,23 +210,24 @@ les valeurs vides ;
 les erreurs ;
 les éventuels doublons ;
 la distribution des principales colonnes.
-📸 Contrôle de la qualité des données
+
+### 📸 Contrôle de la qualité des données
 
 ![Data Quality](Data_Quality.png)
 
-rating_count
+### rating_count
 
 Le profilage a identifié 2 valeurs vides dans la colonne rating_count.
 
 Les lignes concernées ont été examinées puis supprimées afin d'éviter d'introduire des valeurs manquantes dans les analyses basées sur le volume d'évaluations.
 
-rating
+### rating
 
 Le profilage a également identifié 1 valeur en erreur dans la colonne rating.
 
 La ligne concernée a été vérifiée puis supprimée.
 
-🔎 Identification et traitement des doublons
+## 🔎 Identification et traitement des doublons
 
 La distribution de product_id a été analysée afin de vérifier si chaque identifiant correspondait bien à une seule ligne produit.
 
@@ -237,7 +238,7 @@ Au cours des différentes étapes de préparation, le profilage a notamment mont
 
 La fonctionnalité Keep Duplicates de Power Query a été utilisée afin d'isoler les lignes concernées et de comprendre l'origine des répétitions.
 
-📸 Identification des doublons via Keep Duplicates
+### 📸 Identification des doublons via Keep Duplicates
 
 L'analyse a montré que certains product_id apparaissaient plusieurs fois avec des informations produit identiques ou très similaires, notamment concernant :
 
@@ -279,7 +280,8 @@ Elle a été divisée afin de créer plusieurs axes d'analyse distincts et réut
 Exemple de structure initiale :
 
 Main category | Sub category | Product family | Product category | ...
-📸 Traitement et séparation des catégories
+
+### 📸 Traitement et séparation des catégories
 
 Les quatre niveaux retenus ont été renommés :
 
@@ -311,7 +313,8 @@ fractionnement de la colonne Attribute ;
 pivotage des attributs afin de reconstruire les différentes informations sous forme de colonnes ;
 suppression des colonnes intermédiaires devenues inutiles ;
 suppression des lignes vides ou ne contenant pas d'informations exploitables.
-📸 Focus technique — Unpivot & Pivot
+
+### 📸 Focus technique — Unpivot & Pivot
 
 Les principaux champs reconstruits comprennent :
 
@@ -321,6 +324,7 @@ user_name
 review_id
 review_title
 review_content
+
 📌 Granularité de la table Reviews
 
 La restructuration permet d'obtenir le niveau de détail suivant :
@@ -342,7 +346,8 @@ Reviews Count = COUNTROWS(Reviews)
 et :
 
 Distinct Review Count = DISTINCTCOUNT(Reviews[review_id])
-📸 Résultat final de la normalisation
+
+### 📸 Résultat final de la normalisation
 
 🧠 Classification exploratoire des avis dans Power Query
 
@@ -390,6 +395,7 @@ certains mots peuvent avoir des significations différentes selon le contexte ;
 un même avis peut réellement aborder plusieurs thèmes ;
 les règles ne détectent pas toujours l'ironie ou les formulations complexes ;
 certains termes génériques peuvent produire des faux positifs.
+
 🙂 review_sentiment
 
 Une colonne review_sentiment a également été créée afin d'obtenir une première classification du sentiment exprimé dans chaque avis.
