@@ -1,52 +1,50 @@
 # 🛒 Amazon Price & Product Quality Analysis
 
-## Analyse de la relation entre remises, satisfaction client et qualité perçue
+### *Analyse de la relation entre remises, satisfaction client et qualité perçue*
 
 ---
 
-# 🎯 Besoin métier et problématique
+## 🎯 1. Besoin Métier & Problématique
 
 Les promotions constituent un levier commercial important, mais une réduction de prix ne permet pas à elle seule d'évaluer la qualité réelle d'un produit.
 
 Lorsqu'un produit bénéficie d'une remise importante, il est donc intéressant d'examiner si les données disponibles suggèrent également :
 
-- une satisfaction client élevée ;
-- une perception positive de la qualité ;
-- de bonnes performances ;
-- une fiabilité satisfaisante ;
-- ou, au contraire, la présence de problèmes récurrents dans les avis.
+- ⭐ une satisfaction client élevée ;
+- 💎 une perception positive de la qualité ;
+- 🚀 de bonnes performances ;
+- 🛡️ une fiabilité satisfaisante ;
+- ⚠️ ou, au contraire, la présence de problèmes récurrents dans les avis.
 
 L'analyse cherche ainsi à étudier conjointement les prix, les remises, les évaluations et le contenu des avis clients afin de mieux comprendre si les produits fortement remisés présentent une satisfaction comparable aux autres produits et quels éléments semblent contribuer à la perception de leur valeur.
 
-L'objectif n'est pas d'établir une relation causale entre remise et satisfaction, mais d'identifier des **associations, tendances et signaux** observables dans le jeu de données.
+> **Remarque méthodologique :** l'objectif n'est pas d'établir une relation causale entre remise et satisfaction, mais d'identifier des **associations, tendances et signaux** observables dans le jeu de données.
 
 ---
 
-# 🎯 Objectif du projet
+## 🎯 2. Objectifs du Projet
 
 L'objectif du projet est d'analyser les données produits et les avis clients afin d'étudier la relation entre :
 
-- 💰 le prix et les remises ;
-- ⭐ les évaluations moyennes des produits ;
-- 💬 le contenu des avis clients ;
-- 📊 le volume d'évaluations associé aux produits ;
-- 📝 le volume d'avis textuels disponibles.
+- 💰 **le prix et les remises** ;
+- ⭐ **les évaluations moyennes des produits** ;
+- 💬 **le contenu des avis clients** ;
+- 📊 **le volume d'évaluations** associé aux produits (`rating_count`) ;
+- 📝 **le volume d'avis textuels** disponibles dans la table `Reviews`.
 
 L'analyse cherchera notamment à déterminer si les données suggèrent que les produits fortement remisés présentent une satisfaction comparable à celle des produits moins remisés, tout en identifiant les éventuels signaux de faiblesse liés à la qualité, à la performance, à la durabilité ou à la fiabilité.
 
 ---
 
-# 🔎 Axes d'analyse
+## 🔎 3. Axes d'Analyse
 
-## 1. 💰 Prix et satisfaction
+### 3.1 💰 Prix et satisfaction
 
 Étudier la relation entre le niveau de remise, les prix et les évaluations moyennes obtenues par les produits.
 
-L'objectif est notamment d'observer si les produits fortement remisés semblent présenter des niveaux de satisfaction différents de ceux des produits moins remisés.
+L'objectif est d'observer si les produits fortement remisés présentent des niveaux de satisfaction différents de ceux des produits moins remisés.
 
----
-
-## 2. ⭐ Effet d'aubaine vs qualité intrinsèque
+### 3.2 ⭐ Effet d'aubaine vs qualité intrinsèque
 
 Analyser le contenu des avis clients afin d'examiner si les commentaires positifs semblent davantage associés :
 
@@ -64,22 +62,16 @@ ou aux qualités intrinsèques du produit telles que :
 
 Cette analyse reste exploratoire et ne cherche pas à établir que la remise cause directement une meilleure ou une moins bonne satisfaction.
 
----
-
-## 3. 📊 Remises et engagement client
+### 3.3 📊 Remises et engagement client
 
 Examiner les relations entre :
 
 - le niveau de remise ;
 - les évaluations moyennes ;
-- le nombre d'évaluations associé aux produits ;
+- le nombre d'évaluations (`rating_count`) ;
 - le volume d'avis textuels disponibles.
 
-L'objectif est d'identifier d'éventuelles tendances dans l'engagement associé aux différents produits.
-
----
-
-## 4. 💬 Identification des signaux de faiblesse
+### 3.4 💬 Identification des signaux de faiblesse
 
 Explorer le contenu des avis afin d'identifier les problèmes récurrents pouvant concerner :
 
@@ -89,34 +81,29 @@ Explorer le contenu des avis afin d'identifier les problèmes récurrents pouvan
 - la fiabilité ;
 - les défauts techniques ;
 - la conformité du produit ;
-- la facilité d'utilisation ;
-- ou d'autres éléments susceptibles d'influencer la satisfaction.
+- la facilité d'utilisation.
 
----
+### 3.5 💡 Recommandations
 
-## 5. 💡 Recommandations
-
-À partir des tendances réellement observées dans les données, formuler des recommandations permettant :
+À partir des tendances réellement observées, formuler des recommandations permettant :
 
 - d'identifier les principaux leviers d'amélioration ;
 - de détecter les catégories de produits présentant des signaux de faiblesse ;
 - de mieux comprendre la place du prix dans la perception de la valeur ;
 - d'identifier les caractéristiques intrinsèques les plus souvent associées à la satisfaction.
 
-Les recommandations finales seront formulées uniquement après l'analyse complète des résultats.
-
 ---
 
-# 🛠️ 1. Préparation et nettoyage des données — Power Query
+## 🛠️ 4. Préparation et Nettoyage des Données — Power Query
 
-## 📌 Source et structure initiale des données
+### 📌 4.1 Source et structure initiale des données
 
 Le jeu de données utilisé dans ce projet provient de **Kaggle**.
 
 **Nom du dataset :** `Amazon Sales Dataset`  
 **Format :** fichier CSV
 
-### Structure initiale
+#### Structure initiale
 
 - **1 465 lignes**
 - **16 colonnes**
@@ -140,439 +127,311 @@ Les colonnes initiales sont :
 - `img_link`
 - `product_link`
 
-Le jeu de données brut regroupe dans une même structure des informations relatives :
+Le jeu de données brut regroupe dans une même structure des informations relatives aux produits, aux prix, aux catégories, aux évaluations, aux utilisateurs et aux avis clients.
 
-- aux produits ;
-- aux prix ;
-- aux catégories ;
-- aux évaluations ;
-- aux utilisateurs ;
-- aux avis clients.
+Plusieurs utilisateurs, identifiants d'avis, titres et contenus pouvaient être associés à un même produit au sein de colonnes concaténées.
 
-La structure initiale présentait notamment plusieurs informations d'avis regroupées dans une même ligne.
+Cette structure nécessitait une phase de préparation et de restructuration avant la modélisation.
 
-Plusieurs utilisateurs, identifiants d'avis, titres et contenus pouvaient ainsi être associés à un même produit au sein de colonnes concaténées.
-
-Cette organisation nécessitait une phase de préparation et de restructuration avant la modélisation.
-
-### 📸 Structure initiale du jeu de données
+#### 📸 Structure initiale du jeu de données
 
 ![Structure initiale des données](Screenshot%20(102).png)
 
 ---
 
-## 🔢 Typage et normalisation des données
+### 🔢 4.2 Typage et normalisation des données
 
-La première étape a consisté à vérifier et adapter les types de données dans Power Query afin de rendre les champs exploitables pour les calculs et les visualisations.
+#### `actual_price` et `discounted_price`
 
-### `actual_price` et `discounted_price`
+- Suppression des symboles monétaires (`₹`).
+- Nettoyage des caractères empêchant la conversion.
+- Conversion vers un type numérique adapté aux données monétaires.
 
-Les valeurs monétaires étaient initialement stockées sous forme textuelle.
+#### `discount_percentage`
 
-Les transformations suivantes ont été appliquées :
+- Conversion en **nombre décimal**.
+- Exemple : `0.47` correspond à **47 %** lorsque la valeur est formatée en pourcentage dans Power BI.
 
-- suppression des symboles monétaires ;
-- nettoyage des caractères empêchant la conversion ;
-- conversion vers un type numérique adapté aux données monétaires.
+#### `rating`
 
-### `discount_percentage`
+- Configuration en **nombre décimal** afin de permettre les calculs de moyenne.
 
-La colonne a été convertie en valeur numérique décimale afin de permettre son utilisation dans les calculs.
+#### `rating_count`
 
-Une valeur telle que :
+- Configuration en **nombre entier**.
+- Cette colonne représente le **nombre d'évaluations associé au produit** dans le dataset.
 
+> `rating_count` ne doit pas être confondu avec le nombre d'avis textuels présents dans la table `Reviews`.
 
-0.47
-correspond ainsi à :
+---
 
-47 %
+### 🔍 4.3 Profilage et contrôle de la qualité des données
 
-lorsque le champ est formaté en pourcentage dans Power BI.
+Les outils de profilage de Power Query ont été utilisés afin d'identifier :
 
-### rating
+- les valeurs valides ;
+- les valeurs vides ;
+- les erreurs ;
+- les éventuels doublons ;
+- la distribution des principales colonnes.
 
-La colonne rating a été configurée comme nombre décimal afin de permettre les calculs de moyenne et les comparaisons entre produits.
-
-### rating_count
-
-La colonne rating_count a été configurée comme nombre entier.
-
-Elle représente le nombre d'évaluations associé au produit dans le dataset.
-
-Elle ne doit pas être confondue avec le nombre d'avis textuels présents dans la table Reviews.
-
-## 🔍 Profilage et contrôle de la qualité des données
-
-Les fonctionnalités de profilage de Power Query ont été utilisées afin d'identifier :
-
-les valeurs valides ;
-les valeurs vides ;
-les erreurs ;
-les éventuels doublons ;
-la distribution des principales colonnes.
-
-### 📸 Contrôle de la qualité des données
+#### 📸 Contrôle de la qualité des données
 
 ![Data Quality](Data_Quality.png)
 
-### rating_count
+#### `rating_count`
 
-Le profilage a identifié 2 valeurs vides dans la colonne rating_count.
+Le profilage a identifié **2 valeurs vides**.
 
 Les lignes concernées ont été examinées puis supprimées afin d'éviter d'introduire des valeurs manquantes dans les analyses basées sur le volume d'évaluations.
 
-### rating
+#### `rating`
 
-Le profilage a également identifié 1 valeur en erreur dans la colonne rating.
+Le profilage a identifié **1 valeur en erreur**.
 
 La ligne concernée a été vérifiée puis supprimée.
 
-## 🔎 Identification et traitement des doublons
+---
 
-La distribution de product_id a été analysée afin de vérifier si chaque identifiant correspondait bien à une seule ligne produit.
+### 🔎 4.4 Identification et traitement des doublons
 
-Au cours des différentes étapes de préparation, le profilage a notamment montré :
+La distribution de `product_id` a été analysée afin de vérifier si chaque identifiant correspondait bien à une seule ligne produit.
 
-1 351 valeurs distinctes à une étape intermédiaire ;
-1 259 valeurs apparaissant une seule fois à cette même étape.
+À une étape intermédiaire du nettoyage, le profilage indiquait :
 
-La fonctionnalité Keep Duplicates de Power Query a été utilisée afin d'isoler les lignes concernées et de comprendre l'origine des répétitions.
+- **1 351 valeurs distinctes** ;
+- **1 259 valeurs apparaissant une seule fois**.
 
-### 📸 Identification des doublons via Keep Duplicates
+La fonctionnalité **Keep Duplicates** de Power Query a été utilisée afin d'isoler les répétitions et de comprendre leur origine.
+
+#### 📸 Identification des doublons via Keep Duplicates
 
 ![Duplicate Identification](Duplicate_identification.png)
 
-L'analyse a montré que certains product_id apparaissaient plusieurs fois avec des informations produit identiques ou très similaires, notamment concernant :
+L'analyse a montré que certains `product_id` apparaissaient plusieurs fois avec des informations produit identiques ou très similaires, tandis que les différences concernaient principalement les utilisateurs et les avis.
 
-le nom du produit ;
-le prix avant remise ;
-le prix après remise ;
-le niveau de remise ;
-les catégories.
+Cela a confirmé la nécessité de séparer le modèle en deux niveaux de granularité :
 
-Les différences observées concernaient principalement les informations relatives aux utilisateurs et aux avis.
+- **`Products` : 1 ligne = 1 produit**
+- **`Reviews` : plusieurs occurrences d'avis peuvent être associées à un produit**
 
-Cela a confirmé la nécessité de distinguer deux niveaux de granularité :
+Après séparation des informations relatives aux avis, les répétitions ont été traitées au niveau de la table `Products` afin de conserver une seule ligne par `product_id`.
 
-Products
-1 ligne = 1 produit
+#### Résultat final de la table `Products`
 
-et :
+- **1 348 produits**
+- **1 348 `product_id` distincts**
+- **1 348 `product_id` uniques**
 
-Reviews
-plusieurs occurrences d'avis peuvent être associées au même produit
+La colonne `product_id` constitue ainsi l'identifiant unique de la table `Products`.
 
-Après séparation des informations relatives aux avis, les répétitions ont été traitées au niveau de la table Products afin de conserver une seule ligne par product_id.
+> La différence entre les valeurs observées aux étapes intermédiaires et les 1 348 produits finaux résulte de l'ensemble du processus de nettoyage et ne doit pas être attribuée uniquement à la suppression des doublons.
 
-Résultat final de la table Products
-1 348 produits
-1 348 product_id distincts
-1 348 product_id uniques
+---
 
-La colonne product_id constitue ainsi l'identifiant unique de la table Products.
+### 🗂️ 4.5 Restructuration des catégories
 
-La différence entre les valeurs observées à certaines étapes intermédiaires du nettoyage et les 1 348 produits finaux résulte de l'ensemble du processus de nettoyage, et ne doit pas être attribuée uniquement à la suppression des doublons.
+La colonne d'origine `category` contenait plusieurs niveaux de classification concaténés et séparés par le caractère `|`.
 
-# 🗂️ Restructuration des catégories
+Elle a été divisée afin de créer quatre niveaux réutilisables :
 
-La colonne initiale category contenait plusieurs niveaux de classification concaténés et séparés par le caractère |.
+- `main_category`
+- `sub_category`
+- `product_family`
+- `product_category`
 
-Elle a été divisée afin de créer plusieurs axes d'analyse distincts et réutilisables dans Power BI.
+La cinquième colonne générée par le fractionnement présentait une forte proportion de valeurs vides et a été supprimée.
 
-Exemple de structure initiale :
+Les libellés des catégories ont également été harmonisés.
 
-Main category | Sub category | Product family | Product category | ...
-
-### 📸 Traitement et séparation des catégories
+#### 📸 Traitement et séparation des catégories
 
 ![Category Split](category_split.png)
 
-Les quatre niveaux retenus ont été renommés :
+---
 
-main_category
-sub_category
-product_family
-product_category
+### 💬 4.6 Restructuration des avis clients
 
-La cinquième colonne générée par le fractionnement présentait une proportion importante de valeurs vides et n'apportait pas de niveau de classification suffisamment exploitable.
+Une table dédiée **`Reviews`** a été créée afin de normaliser les informations relatives aux utilisateurs et aux avis.
 
-Elle a donc été supprimée.
+Les principales étapes ont été :
 
-Les libellés des catégories ont également été harmonisés afin d'améliorer la cohérence de la nomenclature utilisée dans le rapport.
+1. fractionnement des valeurs concaténées de `user_id`, `user_name`, `review_id`, `review_title` et `review_content` ;
+2. traitement des colonnes supplémentaires générées lors du fractionnement ;
+3. fusion des éléments nécessaires afin de conserver les informations complètes ;
+4. **dépivotage (Unpivot)** avec `product_id` comme colonne d'ancrage ;
+5. fractionnement de la colonne `Attribute` ;
+6. **pivotage (Pivot)** afin de reconstruire les attributs sous forme de colonnes ;
+7. suppression des colonnes intermédiaires devenues inutiles ;
+8. suppression des lignes vides ;
+9. nettoyage des espaces inutiles avec `TRIM`.
 
-# 💬 Restructuration des avis clients
-
-Les informations relatives aux utilisateurs et aux avis étaient initialement regroupées dans plusieurs colonnes pouvant contenir plusieurs valeurs pour un même produit.
-
-Une table dédiée Reviews a donc été créée afin de rapprocher les données de la granularité nécessaire pour l'analyse textuelle.
-
-Les étapes réalisées comprennent notamment :
-
-séparation des informations user_id, user_name, review_id, review_title et review_content ;
-fractionnement des chaînes de caractères à l'aide de délimiteurs ;
-traitement des colonnes supplémentaires générées lors du fractionnement ;
-fusion des éléments nécessaires afin de conserver les informations complètes ;
-dépivotage des données avec product_id comme colonne d'ancrage ;
-fractionnement de la colonne Attribute ;
-pivotage des attributs afin de reconstruire les différentes informations sous forme de colonnes ;
-suppression des colonnes intermédiaires devenues inutiles ;
-suppression des lignes vides ou ne contenant pas d'informations exploitables.
-
-### 📸 Focus technique — Unpivot & Pivot
+#### 📸 Focus technique — Unpivot & Pivot
 
 ![Unpivot Pivot Process](unpivot_pivot_process.png)
 
-Les principaux champs reconstruits comprennent :
+#### 📌 Granularité de la table `Reviews`
 
-product_id
-user_id
-user_name
-review_id
-review_title
-review_content
-
-📌 Granularité de la table Reviews
-
-La restructuration permet d'obtenir le niveau de détail suivant :
-
-1 ligne = 1 occurrence d'avis normalisée, associée à un produit et à un utilisateur.
+> **1 ligne = 1 occurrence d'avis normalisée associée à un produit et à un utilisateur.**
 
 Un même produit peut donc apparaître plusieurs fois dans la table lorsqu'il est associé à plusieurs avis.
 
-Cette formulation est volontairement distincte de :
+La formulation **« occurrence d'avis normalisée »** est utilisée car le nombre de lignes de `Reviews` et le nombre de `review_id` distincts ne sont pas exactement identiques.
 
-1 ligne = 1 avis unique
+**Volume total : 10 734 lignes.**
 
-car le nombre total de lignes et le nombre d'identifiants review_id distincts ne sont pas exactement identiques.
-
-Cette différence est contrôlée ultérieurement à l'aide des mesures :
-
-Reviews Count = COUNTROWS(Reviews)
-
-et :
-
-Distinct Review Count = DISTINCTCOUNT(Reviews[review_id])
-
-### 📸 Résultat final de la normalisation
+#### 📸 Résultat final de la normalisation
 
 ![Reviews Transformation](reviews_transformation.png)
 
-🧠 Classification exploratoire des avis dans Power Query
+---
 
-Afin d'enrichir l'analyse textuelle avant l'utilisation de Python, deux classifications exploratoires ont été créées dans Power Query :
+### 🧠 4.7 Classification exploratoire des avis dans Power Query
 
-review_theme
-review_sentiment
+Avant le traitement NLP sous Python, deux colonnes d'enrichissement ont été créées dans Power Query à partir de la combinaison :
 
-Ces classifications reposent sur des règles lexicales et des mots-clés.
+`review_title + review_content`
 
-Elles ne constituent donc pas un modèle de machine learning ou un modèle NLP entraîné.
+Ces classifications reposent sur des **règles lexicales et des mots-clés**.
 
-Elles servent de première grille d'analyse qui pourra ensuite être comparée à une méthode NLP réalisée avec Python.
+Elles ne constituent pas un modèle de machine learning ou un modèle NLP entraîné.
 
-🏷️ review_theme
+#### 🏷️ `review_theme`
 
-La colonne review_theme cherche à identifier le thème principal évoqué dans chaque avis à partir du texte combiné de :
+La colonne `review_theme` cherche à attribuer un **thème principal** à chaque avis.
 
-review_title + review_content
+Les catégories sont :
 
-Le texte est normalisé en minuscules avant l'application des règles.
+- `Defect / Problem`
+- `Durability`
+- `Price / Value`
+- `Ease of Use`
+- `Performance`
+- `Reliability / Functionality`
+- `Quality`
+- `General / Other`
 
-Les principales catégories retenues sont :
+La classification est actuellement **mono-thème** : un avis reçoit un thème principal.
 
-Defect / Problem
-Durability
-Price / Value
-Ease of Use
-Performance
-Reliability / Functionality
-Quality
-General / Other
+L'ordre des règles est donc important lorsqu'un même avis contient plusieurs sujets.
 
-La classification est actuellement mono-thème :
+#### 🙂 `review_sentiment`
 
-un avis reçoit un thème principal.
+La colonne `review_sentiment` classe les avis selon quatre catégories :
 
-L'ordre des règles est donc important lorsqu'un avis contient des expressions appartenant à plusieurs catégories.
+- `Positive`
+- `Negative`
+- `Neutral / Mixed`
+- `No Review`
 
-Par exemple, un avis mentionnant simultanément un problème technique et le prix pourra être classé dans la première catégorie correspondant aux règles appliquées.
+Les règles négatives sont évaluées avant les règles positives afin de mieux gérer les commentaires contenant à la fois un terme positif et une plainte claire.
 
-Cette méthode constitue une première approximation et possède plusieurs limites :
+Exemple :
 
-certains mots peuvent avoir des significations différentes selon le contexte ;
-un même avis peut réellement aborder plusieurs thèmes ;
-les règles ne détectent pas toujours l'ironie ou les formulations complexes ;
-certains termes génériques peuvent produire des faux positifs.
+> **Good product but stopped working after two weeks**
 
-🙂 review_sentiment
+Le terme `good` est positif, mais l'expression `stopped working` indique clairement un problème.
 
-Une colonne review_sentiment a également été créée afin d'obtenir une première classification du sentiment exprimé dans chaque avis.
+Des exceptions ont également été ajoutées afin de réduire certaines erreurs de contexte, par exemple pour éviter de classer **without any issues** comme négatif.
 
-Les catégories utilisées sont :
+#### ⚠️ Limites de cette classification
 
-Positive
-Negative
-Neutral / Mixed
-No Review
+Les classifications `review_theme` et `review_sentiment` sont **heuristiques**.
 
-La classification analyse également la combinaison :
+Elles permettent une première exploration, mais peuvent produire des erreurs liées au contexte, à la polysémie ou aux formulations complexes.
 
-review_title + review_content
+Elles seront donc comparées à une approche NLP indépendante sous Python.
 
-Les règles négatives sont évaluées avant les règles positives afin d'éviter que certaines phrases contenant à la fois des termes positifs et une plainte claire soient classées automatiquement comme positives.
+---
 
-Exemple conceptuel :
+### 🕒 4.8 Limite temporelle du dataset
 
-"Good product but stopped working after two weeks"
-
-contient le terme positif good, mais également une indication claire de dysfonctionnement.
-
-Une classification purement fondée sur la présence du mot good serait donc insuffisante.
-
-Des exceptions ont également été ajoutées pour réduire certaines erreurs de contexte.
-
-Par exemple, le terme :
-
-issue
-
-ne doit pas entraîner automatiquement un sentiment négatif lorsqu'il apparaît dans une expression telle que :
-
-without any issues
-⚠️ Limites de la classification Power Query
-
-review_theme et review_sentiment constituent des classifications heuristiques basées sur des règles.
-
-Elles permettent :
-
-une première exploration des avis ;
-l'identification de mots-clés fréquents ;
-la construction rapide d'axes d'analyse dans Power BI.
-
-Cependant, elles ne doivent pas être interprétées comme une vérité absolue.
-
-La prochaine phase du projet utilisera Python et des techniques NLP afin de :
-
-produire une seconde classification indépendante ;
-comparer les résultats ;
-analyser les cas de désaccord ;
-identifier les limites de la méthode lexicale ;
-préparer une validation plus rigoureuse.
-🧹 Nettoyage final
-
-Après la restructuration des tables, plusieurs contrôles finaux ont été réalisés :
-
-suppression des espaces inutiles à l'aide de fonctions telles que TRIM ;
-vérification de la cohérence des données textuelles ;
-contrôle des types de données ;
-vérification de la structure finale des tables ;
-contrôle de l'unicité de product_id dans Products ;
-vérification de la cohérence des relations entre produits et avis.
-🕒 Limite temporelle du dataset
-
-Le dataset ne contient pas de véritable colonne de date associée aux produits, aux évaluations ou aux avis.
+Le dataset ne contient pas de colonne de date individuelle associée aux produits, aux évaluations ou aux avis.
 
 Il n'est donc pas possible de réaliser de manière fiable :
 
-une évolution des notes dans le temps ;
-une analyse mensuelle ou annuelle ;
-une évolution historique des prix ;
-une analyse avant/après promotion ;
-une véritable analyse temporelle des avis.
+- une évolution des notes dans le temps ;
+- une analyse mensuelle ou annuelle ;
+- une évolution historique des prix ;
+- une analyse avant/après promotion ;
+- une analyse temporelle des avis.
 
-Les informations de publication ou de mise à jour de la page Kaggle ne doivent pas être utilisées comme date individuelle des observations.
+Les informations de publication ou de mise à jour de la page Kaggle ne doivent pas être utilisées comme date des observations.
 
-Aucune dimension Date artificielle n'a donc été créée dans le modèle.
+Aucune dimension Date artificielle n'a donc été créée.
 
-📊 2. Modélisation des données — Power BI
+---
 
-Après la préparation et le nettoyage réalisés dans Power Query, les données ont été structurées dans Power BI Desktop.
+## 📊 5. Modélisation des Données — Power BI Desktop
 
-L'objectif est de disposer d'un modèle permettant d'analyser les produits, les prix, les remises, les évaluations et les avis à des niveaux de granularité cohérents.
-
-🗂️ Structure du modèle
+### 🗂️ 5.1 Structure du modèle de données
 
 Le modèle repose principalement sur deux tables :
 
-Products
-Reviews
-📦 Products
+- **`Products`** — table de référence des produits ;
+- **`Reviews`** — table contenant les occurrences d'avis normalisées.
 
-La table Products constitue la table de référence des produits.
+Une structure dédiée à l'analyse NLP a également été préparée :
 
-Granularité
+- **`Reviews_NLP`** — table destinée à l'export et à l'analyse NLP sous Python.
 
-1 ligne = 1 produit
+#### `Products`
 
-La colonne :
+**Granularité :**
 
-product_id
+> **1 ligne = 1 produit**
 
-constitue l'identifiant unique de cette table.
+La table contient **1 348 produits uniques**.
 
-Après nettoyage :
+#### `Reviews`
 
-1 348 produits
+**Granularité :**
 
-sont présents dans la table.
+> **1 ligne = 1 occurrence d'avis normalisée associée à un produit et à un utilisateur.**
 
-Elle contient notamment les informations relatives :
+La table contient **10 734 lignes**.
 
-aux produits ;
-aux catégories ;
-aux prix ;
-aux remises ;
-à la note moyenne du produit ;
-au volume d'évaluations associé au produit.
-💬 Reviews
+#### `Reviews_NLP`
 
-La table Reviews contient les informations restructurées relatives aux avis clients.
+La table préparée pour Python contient actuellement :
 
-Granularité
+- `product_id`
+- `review_id`
+- `review_title`
+- `review_theme`
+- `review_content`
+- `review_sentiment`
 
-1 ligne = 1 occurrence d'avis normalisée associée à 1 produit et à 1 utilisateur.
+Elle contient également **10 734 lignes**.
 
-Un même product_id peut donc apparaître plusieurs fois dans cette table.
+---
 
-Les principaux champs comprennent notamment :
+### 🔗 5.2 Relation entre les tables
 
-product_id
-user_id
-user_name
-review_id
-review_title
-review_content
+La relation principale repose sur `product_id`.
 
-Cette table constitue la base des analyses portant sur :
+```text
+Products (1) ─────────── (*) Reviews
+```
 
-les utilisateurs ;
-les avis textuels ;
-les thèmes ;
-le sentiment.
-🧠 Table préparée pour l'analyse NLP
+La cardinalité est donc 1-à-plusieurs.
 
-Une structure dédiée à l'analyse NLP a également été préparée.
+Ainsi :
 
-La table Reviews_NLP contient actuellement :
+un produit apparaît une seule fois dans Products ;
+un produit peut être associé à plusieurs lignes dans Reviews.
 
-product_id
-review_id
-review_title
-review_theme
-review_content
-review_sentiment
+### 📸 Vérification du filtrage entre tables
 
-Elle contient :
+Un test de filtrage a été réalisé afin de vérifier que la sélection d'un produit dans Products filtre correctement les avis associés dans Reviews.
 
-10 734 lignes
+![Test Filtre](test_filtre.png)
 
-Cette structure sera utilisée par Python afin que l'analyse NLP soit effectuée au niveau des avis normalisés plutôt que directement sur les colonnes concaténées du fichier CSV brut.
+### 🌳 5.3 Hiérarchie des catégories
 
-🌳 Hiérarchie des catégories
+Une hiérarchie a été créée dans Products afin de permettre le drill-down :
 
-Une hiérarchie a été créée dans la table Products afin de permettre une navigation progressive dans les catégories.
-
-La hiérarchie utilisée est :
-
+```text
 Main Category
       ↓
 Sub Category
@@ -581,423 +440,470 @@ Product Family
       ↓
 Product Category
 
-Cette structure permettra d'utiliser le drill-down dans Power BI afin de passer progressivement d'une catégorie générale à un niveau plus détaillé.
+```
 
-⚙️ Configuration des propriétés des colonnes
-
-Après le chargement dans Power BI, les propriétés des colonnes ont été contrôlées afin de garantir leur utilisation correcte dans les mesures et les visualisations.
-
-Les principaux contrôles ont porté sur :
-
-le type de données ;
-le format d'affichage ;
-la catégorie de données ;
-le comportement des champs numériques et textuels.
-💰 Champs monétaires
-
-Les colonnes :
-
+### ⚙️ 5.4 Configuration des propriétés des colonnes
+#### Champs monétaires
 actual_price
 discounted_price
 
-ont été configurées comme valeurs numériques monétaires.
+Les montants sont exprimés en roupies indiennes (₹ / INR).
 
-Les montants du dataset sont exprimés en roupies indiennes (₹ / INR).
-
-📊 Champs numériques
-
-Les principaux champs numériques ont été configurés comme suit :
-
-rating              → nombre décimal
-rating_count        → nombre entier
+#### Champs numériques
+rating → nombre décimal
+rating_count → nombre entier
 discount_percentage → nombre décimal / pourcentage
-🔑 Identifiants
 
-Les champs :
+#### Identifiants
 
 product_id
 user_id
 review_id
 
-sont conservés comme champs textuels.
+Ces champs sont conservés comme texte, car ils servent d'identifiants et ne doivent pas être additionnés ou moyennés.
 
-Ils représentent des identifiants et ne doivent donc pas être additionnés ou moyennés.
+## 🧮 6. Mesures DAX de Référence
 
-🔗 Relation entre les tables
+Une première série de mesures descriptives a été créée afin de disposer d'indicateurs de référence pour l'analyse.
 
-Une relation a été créée entre Products et Reviews à partir de :
+### ⭐ 6.1 Satisfaction produit
+#### Average Rating
 
-product_id
-
-La cardinalité est :
-
-Products (1) ─────────── (*) Reviews
-
-Ainsi :
-
-un produit apparaît une seule fois dans Products ;
-un produit peut être associé à plusieurs lignes dans Reviews.
-📸 Vérification du filtrage
-
-![Test Filtre](test_filtre.png)
-
-Un test a été réalisé afin de vérifier que la sélection d'un produit dans Products filtre correctement les avis associés dans Reviews.
-
-Ce contrôle a permis de confirmer le fonctionnement attendu de la relation.
-
-🧮 3. Création des mesures DAX de référence
-
-Après la mise en place du modèle et la vérification des relations, une première série de mesures DAX a été créée.
-
-Ces mesures constituent les indicateurs descriptifs de référence du projet.
-
-Elles permettront ensuite de construire des analyses plus avancées autour des cinq axes métier.
-
-⭐ 1. Satisfaction produit
-Average Rating
-Average Rating =
+```dax
+ Average Rating =
 AVERAGE(Products[rating])
+```
+Valeur observée : 4,09 / 5
 
-Valeur observée :
+Cette mesure calcule la moyenne des notes stockées au niveau produit.
 
-4,09
+Il s'agit donc d'une moyenne non pondérée des notes moyennes des produits : chaque produit contribue de manière identique au calcul.
 
-Cette mesure calcule la moyenne des notes stockées dans la table Products.
+Une moyenne pondérée par rating_count pourra être étudiée ultérieurement.
 
-Il est important de préciser que :
+### 💰 6.2 Prix et remises
+#### Average Actual Price
 
-chaque ligne de Products représente un produit.
-
-Average Rating correspond donc à la moyenne des notes moyennes des produits, chaque produit ayant le même poids dans ce calcul.
-
-Cette mesure ne correspond pas à une moyenne calculée directement à partir de toutes les évaluations individuelles Amazon.
-
-Une moyenne pondérée par rating_count pourra être étudiée ultérieurement dans les mesures analytiques.
-
-💰 2. Prix et remises
-Average Actual Price
-Average Actual Price =
+```dax
+ Average Actual Price =
 AVERAGE(Products[actual_price])
+```
 
-Valeur observée :
+Valeur observée : ≈ ₹5,70 K
 
-≈ ₹5,70 K
+#### Average Discounted Price
 
-Cette mesure calcule le prix moyen des produits avant remise.
-
-Average Discounted Price
+```dax
 Average Discounted Price =
 AVERAGE(Products[discounted_price])
+```
+Valeur observée : ≈ ₹3,31 K
 
-Valeur observée :
+#### Average Discount
 
-≈ ₹3,31 K
-
-Cette mesure calcule le prix moyen des produits après remise.
-
-Elle permettra notamment de comparer le positionnement tarifaire avant et après réduction.
-
-Average Discount
+```dax
 Average Discount =
 AVERAGE(Products[discount_percentage])
+```
+Valeur observée : 47 %
 
-Valeur observée :
+### 📦 6.3 Volume de produits
+#### Product Count
 
-0,47
-
-soit :
-
-47 %
-
-lorsque la mesure est formatée en pourcentage dans Power BI.
-
-Cette mesure servira de référence pour étudier les relations entre remise, satisfaction et engagement.
-
-📦 3. Volume de produits
-Product Count
+```dax
 Product Count =
 COUNTROWS(Products)
+```
 
-Valeur exacte :
+Valeur exacte : 1 348 produits
 
-1 348
+### 📊 6.4 Volume d'évaluations
+#### Total Rating Count
 
-Power BI peut afficher cette valeur sous forme abrégée :
-
-1,35 K
-
-Cette mesure permet de contrôler le nombre de produits présents dans le contexte de filtre utilisé.
-
-📊 4. Volume d'évaluations et engagement
-Total Rating Count
+```dax
 Total Rating Count =
 SUM(Products[rating_count])
-
+```
 Cette mesure additionne le nombre d'évaluations indiqué pour les produits.
 
-Elle représente donc un volume d'évaluations agrégé au niveau produit.
+Elle représente un volume d'évaluations agrégé au niveau produit et ne correspond pas au nombre d'avis textuels présents dans Reviews.
 
-Elle ne correspond pas au nombre de lignes présentes dans Reviews.
+#### Average Rating Count
 
-Cette distinction est essentielle :
-
-rating_count
-≠
-nombre d'avis textuels disponibles
-Average Rating Count
+```dax
 Average Rating Count =
 AVERAGE(Products[rating_count])
+```
 
-Valeur observée :
+Valeur observée : ≈ 17,66 K
 
-≈ 17,66 K
+### 💬 6.5 Avis clients
+##### Reviews Count
 
-Cette mesure calcule le nombre moyen d'évaluations associé à un produit.
-
-Elle permettra de comparer l'engagement moyen entre différentes catégories ou différents niveaux de remise.
-
-💬 5. Avis clients
-
-Les mesures suivantes utilisent la table Reviews.
-
-Reviews Count
+```dax
 Reviews Count =
 COUNTROWS(Reviews)
+```
 
-Cette mesure compte le nombre total de lignes de la table normalisée.
+Valeur exacte : 10 734 lignes
 
-La structure normalisée contient actuellement :
+Power BI peut afficher cette valeur sous forme abrégée : ≈ 11 K.
 
-10 734 lignes
+#### Distinct Review Count
 
-Power BI peut afficher cette valeur sous forme abrégée :
-
-≈ 11 K
-
-Cette mesure doit être interprétée comme un nombre d'occurrences d'avis normalisées, et non automatiquement comme le nombre d'identifiants d'avis uniques.
-
-Distinct Review Count
+```dax
 Distinct Review Count =
 DISTINCTCOUNT(Reviews[review_id])
+```
 
-Valeur affichée dans Power BI :
+Valeur affichée dans Power BI : ≈ 9 K
 
-≈ 9 K
+#### Distinct User Count
 
-Cette mesure compte le nombre d'identifiants review_id distincts.
+```dax
 
-Elle permet de distinguer :
-
-nombre de lignes
-
-de :
-
-nombre d'identifiants d'avis uniques
-Distinct User Count
 Distinct User Count =
 DISTINCTCOUNT(Reviews[user_id])
+```
+Valeur affichée dans Power BI : ≈ 9 K
 
-Valeur affichée dans Power BI :
+### 📌 6.6 Synthèse des mesures de référence
 
-≈ 9 K
+Axe	Mesure DAX	Table	Description	Valeur observée
 
-Cette mesure compte les utilisateurs distincts présents dans la table d'avis.
+⭐ Satisfaction	Average Rating	Products	Note moyenne des produits, non pondérée	4,09 / 5
+💰 Prix initial	Average Actual Price	Products	Prix moyen avant remise	≈ ₹5,70 K
+💰 Prix remisé	Average Discounted Price	Products	Prix moyen après remise	≈ ₹3,31 K
+🏷️ Promotion	Average Discount	Products	Taux moyen de remise	47 %
+📦 Produits	Product Count	Products	Nombre de produits uniques	1 348
+📊 Évaluations	Total Rating Count	Products	Volume total d'évaluations	—
+📊 Évaluations	Average Rating Count	Products	Nombre moyen d'évaluations par produit	≈ 17,66 K
+💬 Avis	Reviews Count	Reviews	Nombre de lignes d'avis normalisées	10 734
+💬 Avis uniques	Distinct Review Count	Reviews	Nombre de review_id distincts	≈ 9 K
+👤 Utilisateurs	Distinct User Count	Reviews	Nombre d'utilisateurs distincts	≈ 9 K
 
-Elle permettra notamment d'étudier la diversité des utilisateurs associés aux avis disponibles.
+## 🧪 7. Validation de la Classification du Sentiment avec Orange Data Mining
 
-📌 Synthèse des mesures de référence
-Axe	Mesure	Table	Rôle
-⭐ Satisfaction	Average Rating	Products	Mesurer la note moyenne des produits
-💰 Prix	Average Actual Price	Products	Mesurer le prix moyen avant remise
-💰 Prix	Average Discounted Price	Products	Mesurer le prix moyen après remise
-💰 Remise	Average Discount	Products	Mesurer le niveau moyen de remise
-📦 Produits	Product Count	Products	Compter les produits analysés
-📊 Évaluations	Total Rating Count	Products	Mesurer le volume total d'évaluations indiqué au niveau produit
-📊 Évaluations	Average Rating Count	Products	Mesurer le nombre moyen d'évaluations associé à un produit
-💬 Avis	Reviews Count	Reviews	Compter les lignes d'avis normalisées
-💬 Avis	Distinct Review Count	Reviews	Compter les identifiants d'avis distincts
-👤 Utilisateurs	Distinct User Count	Reviews	Compter les utilisateurs distincts
-🐍 4. Prochaine étape — Python et NLP
+La classification `review_sentiment` créée dans Power Query repose sur une approche lexicale déterministe.
 
-La prochaine étape consiste à poursuivre l'analyse des avis clients avec Python et des techniques de Natural Language Processing (NLP).
+Afin d'évaluer sa cohérence par rapport à une interprétation humaine, une phase de validation indépendante a été réalisée avec **Orange Data Mining**.
 
-Cette phase doit compléter, et non simplement reproduire, la classification réalisée dans Power Query.
+L'objectif n'était pas d'entraîner un nouveau modèle de sentiment, mais d'évaluer les prédictions déjà produites par Power Query sur un échantillon annoté manuellement.
 
-L'objectif est notamment de comparer deux approches :
+### 🎯 Méthodologie de Validation
 
-Power Query
-classification lexicale basée sur des règles
+Un échantillon aléatoire reproductible de **400 avis** a été extrait des **10 582 avis normalisés**.
 
-et :
+Pour éviter que la classification Power Query influence l'annotation humaine, les colonnes `review_sentiment` et `review_theme` ont été masquées lors de la préparation de l'échantillon.
 
-Python / NLP
-analyse indépendante du sentiment
-🎯 Objectifs de l'analyse NLP
+Chaque avis a ensuite été annoté manuellement à partir de `review_title` et `review_content` selon trois catégories :
 
-L'analyse Python permettra notamment de :
+- `positive`
+- `negative`
+- `neutral`
 
-combiner review_title et review_content ;
-analyser le sentiment avec VADER ;
-créer un score de sentiment numérique ;
-créer une classification NLP indépendante ;
-comparer le sentiment Python avec review_sentiment ;
-identifier les avis pour lesquels les deux méthodes sont en désaccord ;
-examiner manuellement les cas ambigus ;
-mesurer ultérieurement les performances sur un échantillon annoté manuellement.
-🔄 Logique prévue
-Avis clients normalisés
+L'annotation manuelle constitue une **référence humaine de validation**, et non une vérité absolue.
+
+Les annotations ont ensuite été réintégrées dans Orange et rapprochées des prédictions Power Query à l'aide de la clé composite :
+
+```text
+(product_id, review_id)
+```
+
+Cette jointure a permis d'obtenir **400 correspondances sur 400**, sans duplication.
+
+### 🔄 Logique de Validation
+
+```text
+10 582 Avis Normalisés
         │
-        ├───────────────┐
-        ↓               ↓
-Power Query          Python NLP
-règles lexicales       VADER
-        │               │
-        ↓               ↓
-review_sentiment   vader_sentiment
-review_theme       vader_compound
-        │               │
-        └───────┬───────┘
-                ↓
-          Comparaison
-                ↓
-      Analyse des désaccords
-                ↓
-       Validation manuelle
-                ↓
-             Power BI
-📊 Validation
+        ↓
+Échantillon Aléatoire Reproductible
+        │
+        ↓
+      400 Avis
+        │
+        ├─────────────────────────┐
+        ↓                         ↓
+Annotation Humaine         Classification Power Query
+manual_sentiment           review_sentiment
+        │                         │
+        └────────────┬────────────┘
+                     ↓
+              Merge dans Orange
+          (product_id + review_id)
+                     ↓
+              400 / 400 lignes
+                     ↓
+             Test and Score
+                     ↓
+             Confusion Matrix
+                     ↓
+              Analyse des Erreurs
+```
 
-La qualité de la classification ne sera pas évaluée uniquement à partir de quelques observations visuelles.
+### 📊 Résultats de la Validation
 
-Une validation plus rigoureuse pourra être réalisée en constituant un échantillon d'avis annotés manuellement.
+La comparaison entre `manual_sentiment` et `review_sentiment` a produit les métriques suivantes :
 
-Cela permettra ensuite de calculer des métriques telles que :
+| Métrique | Résultat |
+|---|---:|
+| Accuracy / CA | 0,700 |
+| F1 Score | 0,703 |
+| Precision | 0,706 |
+| Recall | 0,700 |
+| AUC | 0,693 |
+| MCC | 0,381 |
 
-accuracy ;
-precision ;
-recall ;
-F1-score ;
-matrice de confusion.
+La classification Power Query présente donc une **concordance globale de 70 % avec la référence humaine** sur l'échantillon de validation.
 
-Aucune valeur de précision ne sera annoncée avant la réalisation de cette validation.
+Sur les 400 avis :
 
-🔎 Étapes analytiques suivantes
+- **280** ont été classés de manière concordante ;
+- **120** présentent un désaccord entre la règle Power Query et l'annotation humaine.
 
-Une fois l'analyse NLP terminée et les résultats réintégrés dans le modèle Power BI, le projet pourra passer aux mesures analytiques permettant de répondre directement aux cinq axes métier.
+### 🧩 Matrice de Confusion
 
-Les analyses pourront notamment inclure :
+| Réel \ Prédit | Negative | Neutral | Positive | Total |
+|---|---:|---:|---:|---:|
+| Negative | 23 | 18 | 14 | 55 |
+| Neutral | 15 | 28 | 27 | 70 |
+| Positive | 17 | 29 | 229 | 275 |
+| **Total** | **55** | **75** | **270** | **400** |
 
-comparaison des notes selon le niveau de remise ;
-moyenne pondérée des notes par rating_count ;
-segmentation des remises ;
-comparaison prix / satisfaction ;
-comparaison remise / engagement ;
-analyse des thèmes des avis ;
-part des avis positifs et négatifs ;
-analyse des catégories concentrant les problèmes ;
-comparaison sentiment Power Query / sentiment Python ;
-analyse de la dispersion des prix et des notes ;
-utilisation de médianes et d'écarts-types lorsque cela apporte une information pertinente.
+La classification reconnaît nettement mieux les avis positifs que les avis négatifs ou neutres.
 
-Ces mesures seront ajoutées uniquement après la finalisation de la phase Python/NLP.
+Le rappel observé par classe est approximativement de :
 
-💡 Recommandations — À venir
+- **83,3 %** pour les avis positifs ;
+- **41,8 %** pour les avis négatifs ;
+- **40,0 %** pour les avis neutres.
 
-Les recommandations finales ne sont pas encore formulées.
+### 🔎 Analyse des 120 Désaccords
 
-Elles seront basées exclusivement sur les tendances réellement observées après :
+Les **120 avis mal classés** ont été inspectés dans Orange.
 
-la préparation des données ;
-la modélisation ;
-l'analyse NLP ;
-la création des mesures analytiques ;
-la construction des visualisations finales.
+Les six types d'erreurs observés sont :
 
-L'objectif sera notamment d'identifier :
+| Erreur | Nombre |
+|---|---:|
+| Neutral → Positive | 27 |
+| Negative → Positive | 14 |
+| Positive → Negative | 17 |
+| Positive → Neutral | 29 |
+| Negative → Neutral | 18 |
+| Neutral → Negative | 15 |
+| **Total** | **120** |
 
-les produits ou catégories présentant des signaux de faiblesse ;
-les facteurs les plus souvent associés aux avis positifs ;
-les problèmes les plus fréquemment évoqués ;
-les situations dans lesquelles une remise importante ne semble pas s'accompagner d'une satisfaction élevée ;
-les leviers d'amélioration potentiels.
-⚠️ Limites de l'analyse
+Les principales causes identifiées sont :
 
-Plusieurs limites doivent être prises en compte dans l'interprétation des résultats.
+- vocabulaire positif incomplet ;
+- vocabulaire négatif incomplet ;
+- difficulté à interpréter les avis mixtes ou nuancés ;
+- priorité parfois trop forte donnée aux termes négatifs ;
+- présence de critiques non couvertes par le lexique ;
+- variantes linguistiques, fautes et formulations non prévues ;
+- présence de contenus dans d'autres langues ;
+- ambiguïté possible de certaines annotations humaines.
 
-Absence de données temporelles
+### 🧠 Décision Méthodologique
 
-Le dataset ne fournit pas de dates individuelles pour les produits ou les avis.
+La règle Power Query n'a pas été modifiée après l'analyse de ces erreurs.
+
+Modifier le lexique à partir des erreurs observées puis réévaluer la classification sur les **mêmes 400 avis** risquerait de suradapter les règles à l'échantillon de validation.
+
+Les résultats sont donc conservés tels quels et les limites de la classification seront prises en compte dans l'interprétation des visualisations Power BI.
+
+> Sur un échantillon aléatoire reproductible de 400 avis annotés manuellement, la classification lexicale a obtenu 70 % de concordance avec la référence humaine. L'analyse de la matrice de confusion montre une meilleure reconnaissance des avis positifs que des avis négatifs ou neutres. Les principaux désaccords proviennent des avis mixtes, du vocabulaire non couvert et de l'absence de compréhension contextuelle inhérente à une approche lexicale déterministe.
+
+---
+
+## 📐 8. Analyse DAX
+
+Après la préparation des données et la validation de la classification du sentiment, des mesures DAX ont été développées afin de construire la couche analytique du projet.
+
+### Mesures descriptives
+
+Les mesures de référence comprennent notamment :
+
+- nombre de produits ;
+- nombre d'avis normalisés ;
+- nombre d'avis distincts ;
+- nombre d'utilisateurs distincts ;
+- rating moyen ;
+- prix initial moyen ;
+- prix remisé moyen ;
+- remise moyenne ;
+- volume total de ratings ;
+- volume moyen de ratings.
+
+### Mesures analytiques
+
+Des mesures supplémentaires ont été développées afin d'étudier :
+
+- la part des avis positifs ;
+- la part des avis négatifs ;
+- la part des avis neutres ou mixtes ;
+- le nombre d'avis classés `Defect / Problem` ;
+- le taux d'avis classés `Defect / Problem` ;
+- les écarts de prix par rapport au benchmark global ;
+- les écarts de rating par rapport au benchmark global ;
+- les écarts de remise par rapport au benchmark global ;
+- le niveau d'engagement par rapport aux références globales ;
+- les produits combinant forte remise et rating inférieur à la moyenne ;
+- les produits combinant forte remise et rating supérieur à la moyenne.
+
+### 📊 Moyenne et Médiane de l'Engagement
+
+L'analyse de `rating_count` montre une différence importante entre la moyenne et la médiane :
+
+```text
+Average Rating Count ≈ 17,66K
+Median Rating Count  ≈ 4,74K
+```
+
+La moyenne est donc nettement supérieure à la médiane.
+
+Cela indique une distribution asymétrique dans laquelle certains produits disposant d'un très grand nombre de ratings tirent la moyenne vers le haut.
+
+Pour cette raison, la **médiane est également utilisée comme benchmark d'engagement**, car elle représente mieux le niveau central de la distribution.
+
+`rating_count` est interprété comme un **signal d'engagement ou de popularité**, et non comme un volume de ventes.
+
+### Premiers Indicateurs
+
+L'analyse des benchmarks a notamment permis d'identifier :
+
+- **297 produits** combinant une remise supérieure à la moyenne et un rating inférieur à la moyenne ;
+- **424 produits** combinant une remise supérieure à la moyenne et un rating supérieur à la moyenne ;
+- **559 avis**, soit **5,28 % des 10 582 avis normalisés**, classés dans le thème `Defect / Problem`.
+
+Ces résultats constituent des **signaux analytiques à explorer dans les visualisations** et ne démontrent pas de relation causale.
+
+---
+
+## 📊 9. Visualisations Power BI — En Cours
+
+La phase actuelle du projet consiste à transformer les mesures descriptives et analytiques en visualisations Power BI.
+
+Les visualisations seront organisées autour des axes suivants :
+
+1. **Prix et satisfaction**
+2. **Effet d'aubaine vs qualité intrinsèque**
+3. **Remises et engagement client**
+4. **Identification des signaux de faiblesse**
+5. **Synthèse et recommandations**
+
+Les conclusions seront formulées uniquement après analyse des visualisations finales.
+
+---
+
+## 💡 10. Recommandations — À Venir
+
+Les recommandations finales seront formulées uniquement après :
+
+- la préparation et la normalisation des données ;
+- la modélisation Power BI ;
+- la validation de la classification du sentiment avec Orange ;
+- la création des mesures DAX analytiques ;
+- la construction et l'interprétation des visualisations finales.
+
+Elles viseront notamment à identifier :
+
+- les produits ou catégories présentant des signaux de faiblesse ;
+- les thèmes les plus fréquemment associés aux avis clients ;
+- les catégories concentrant les problèmes ;
+- les situations dans lesquelles une remise importante s'accompagne ou non d'une satisfaction élevée ;
+- les différences d'engagement entre catégories et produits ;
+- les principaux leviers d'amélioration identifiés dans les données.
+
+---
+
+## ⚠️ 11. Limites de l'Analyse
+
+### Absence de données temporelles
+
+Le dataset ne fournit pas de dates individuelles fiables pour les produits ou les avis.
 
 Aucune tendance temporelle fiable ne peut donc être calculée.
 
-Absence de données de ventes
+### Absence de données de ventes
 
 Le dataset ne fournit pas directement :
 
-les quantités vendues ;
-le chiffre d'affaires ;
-le taux de conversion.
+- les quantités vendues ;
+- le chiffre d'affaires ;
+- le taux de conversion.
 
-Le niveau de remise ne peut donc pas être utilisé pour mesurer directement son effet sur les ventes.
+Il n'est donc pas possible de mesurer directement l'effet d'une remise sur les ventes.
 
-rating au niveau produit
+### `rating` au niveau produit
 
-La colonne rating représente une note agrégée associée au produit.
+La colonne `rating` représente une note agrégée associée au produit.
 
 Elle n'est pas une note individuelle liée à chaque avis textuel.
 
-rating_count différent du volume d'avis textuels
+### `rating_count` différent du volume d'avis textuels
 
-rating_count représente le nombre d'évaluations indiqué pour chaque produit.
+`rating_count` représente le nombre d'évaluations associé à chaque produit.
 
-Le nombre de lignes de Reviews représente uniquement les avis textuels disponibles et normalisés dans le dataset.
+Le nombre de lignes de `reviews` représente uniquement les occurrences d'avis textuels disponibles et normalisées dans le dataset.
 
 Ces deux mesures ne doivent donc pas être interprétées comme équivalentes.
 
-Classification lexicale
+### Classification lexicale du sentiment
 
-Les classifications review_theme et review_sentiment créées dans Power Query reposent sur des règles.
+`review_sentiment` repose sur des règles lexicales déterministes appliquées au titre et au contenu des avis.
 
-Elles peuvent produire des erreurs de contexte et seront donc confrontées à une approche NLP indépendante.
+La validation sur 400 avis annotés manuellement a montré **70 % de concordance globale**, avec de meilleures performances sur les avis positifs que sur les avis négatifs ou neutres.
 
-Interprétation des relations
+Cette variable doit donc être interprétée comme un **signal analytique imparfait**, et non comme une mesure exacte du sentiment réel.
 
-Les analyses permettront d'identifier des associations entre variables.
+### Classification des thèmes
 
-Elles ne permettront pas, à elles seules, d'établir une relation causale entre :
+`review_theme` repose également sur une classification lexicale déterministe.
 
-promotion
-→
-satisfaction
+Un thème principal est attribué à chaque avis selon les mots et expressions détectés.
 
-ou :
+Cette classification ne constitue pas un modèle NLP entraîné et peut manquer certains contextes ou formulations.
 
-promotion
-→
-engagement
-🧰 Outils utilisés
-Power Query — préparation, transformation, nettoyage et normalisation des données
-Power BI — modélisation, analyse et visualisation
-DAX — création des indicateurs et mesures
-Python — analyse complémentaire des avis clients
-Pandas — manipulation et préparation des données en Python
-NumPy — opérations numériques
-VADER Sentiment Analysis — analyse NLP du sentiment
-Git / GitHub — documentation et présentation du projet
+### Référence humaine
 
-La phase Python / NLP est actuellement en cours. Les résultats NLP ne seront documentés comme résultats définitifs qu'une fois l'analyse réellement réalisée.
+`manual_sentiment` a été utilisé sur un échantillon de 400 avis afin d'évaluer `review_sentiment`.
 
-📁 Structure du projet
+Cette annotation constitue une référence humaine de validation, mais certaines classifications peuvent rester subjectives, notamment pour les avis mixtes.
+
+### Interprétation des relations
+
+Les analyses permettent d'identifier des **associations, tendances et signaux**, mais ne permettent pas, à elles seules, d'établir une relation causale entre :
+
+- promotion et satisfaction ;
+- promotion et engagement ;
+- prix et satisfaction.
+
+---
+
+## 🧰 12. Outils Utilisés
+
+- **Power Query** — préparation, transformation, nettoyage, normalisation et classifications lexicales
+- **Orange Data Mining** — échantillonnage, rapprochement des annotations, validation du sentiment, matrice de confusion et analyse des erreurs
+- **Power BI Desktop** — modélisation, analyse et visualisation
+- **DAX** — création des mesures descriptives, benchmarks et indicateurs analytiques
+- **Excel** — annotation manuelle de l'échantillon de validation
+- **Git / GitHub** — documentation et gestion du projet
+
+---
+
+## 📁 13. Structure du Dépôt
+
+```text
 amazon-price-product-quality-analysis/
 │
 ├── data/
 │   └── amazon.csv
 │
 ├── powerbi/
-│   └── Amazon portfolio.pbix
-│
-├── python/
-│   └── amazon_nlp.py
+│   └── Amazon portfolio avancé.pbix
 │
 ├── screenshots/
 │   ├── Screenshot (102).png
@@ -1009,61 +915,57 @@ amazon-price-product-quality-analysis/
 │   └── test_filtre.png
 │
 └── README.md
+```
 
-La structure ci-dessus doit rester alignée avec les noms réels des fichiers présents dans le repository. Si un fichier est renommé dans GitHub, son nom devra également être mis à jour dans cette section et dans les liens correspondants du README.
+> La structure du dépôt sera mise à jour si les fichiers de validation Orange et les captures correspondantes sont ajoutés au repository.
 
-🚧 Statut actuel du projet
+---
 
-Les étapes actuellement terminées sont :
+## 🚧 14. Statut Actuel du Projet
 
-préparation du dataset brut ;
-contrôle de la qualité des données ;
-traitement des valeurs manquantes et erreurs ;
-restructuration des catégories ;
-normalisation des avis ;
-création des tables Products et Reviews ;
-création de la relation entre les tables ;
-configuration du modèle Power BI ;
-création des mesures DAX descriptives de référence ;
-création d'une première classification lexicale des thèmes ;
-création d'une première classification lexicale du sentiment ;
-préparation de la table destinée à l'analyse NLP ;
-configuration de l'environnement Python ;
-validation du fonctionnement de Pandas, NumPy et VADER.
-Étape en cours
-Python / NLP
+### ✅ Étapes terminées
 
-La prochaine phase consiste à appliquer l'analyse de sentiment Python aux avis normalisés, comparer ses résultats aux règles Power Query puis préparer leur intégration dans Power BI.
+- Préparation du dataset brut
+- Contrôle de la qualité des données
+- Traitement des valeurs manquantes et erreurs
+- Traitement des doublons au niveau produit
+- Restructuration des catégories
+- Normalisation des avis clients
+- Création des tables `Products` et `reviews`
+- Création de la table `reviews_analysis`
+- Vérification des relations du modèle Power BI
+- Création des mesures DAX descriptives
+- Création de `review_theme`
+- Création de `review_sentiment`
+- Échantillonnage reproductible de 400 avis avec Orange
+- Annotation humaine des 400 avis
+- Rapprochement des annotations et prédictions Power Query
+- Validation de `review_sentiment`
+- Analyse de la matrice de confusion
+- Analyse des 120 désaccords
+- Création des principales mesures DAX analytiques et benchmarks
 
-📈 Objectif final
+### 🔄 Étape en cours
 
-À terme, ce projet doit permettre de construire un tableau de bord Power BI combinant :
+- Construction des visualisations Power BI
+- Analyse des résultats par produit et catégorie
 
-Prix
-+
-Remises
-+
-Satisfaction
-+
-Engagement
-+
-Thèmes des avis
-+
-Sentiment
+### ⏭️ Prochaines étapes
 
-afin d'obtenir une vision plus complète de la relation entre le positionnement tarifaire des produits et la qualité perçue par les clients.
+- Finalisation des visualisations Power BI
+- Interprétation des résultats
+- Recommandations métier
+- Finalisation du dashboard
+- Finalisation du portfolio GitHub
 
+---
 
-### Les corrections les plus importantes à comprendre
+## 📈 15. Objectif Final
 
-Il y en a quatre sur lesquelles je veux attirer ton attention, parce qu'un recruteur pourrait justement t'interroger dessus.
+Le projet vise à construire un tableau de bord Power BI combinant :
 
-**Premièrement, les 1 351 → 1 348 produits.** Ton ancien README faisait croire que la simple suppression des doublons expliquait cette variation. Or le même passage annonce d'abord 1 351 valeurs distinctes puis 1 348 après nettoyage. :contentReference[oaicite:3]{index=3} J'ai donc corrigé la causalité : les 1 348 constituent **l'état final après l'ensemble du nettoyage**, sans prétendre que la déduplication seule a supprimé trois identifiants distincts.
+**Prix + Remises + Satisfaction + Engagement + Thèmes des avis + Sentiment**
 
-**Deuxièmement, `rating_count` n'est pas `Reviews Count`.** Ton ancien README qualifiait les deux d'indicateurs d'engagement sans suffisamment distinguer les populations mesurées. :contentReference[oaicite:4]{index=4} Désormais, le README explique explicitement qu'un chiffre provient du compteur d'évaluations Amazon au niveau produit, alors que l'autre compte les lignes textuelles normalisées disponibles dans notre échantillon.
+afin d'obtenir une vision structurée des associations entre le positionnement tarifaire des produits, leur niveau d'engagement et les signaux de satisfaction ou d'insatisfaction exprimés dans les avis clients.
 
-**Troisièmement, nous ne prétendons plus que chaque ligne de `Reviews` est nécessairement un avis unique.** Ton ancien README l'affirmait explicitement. :contentReference[oaicite:5]{index=5} Comme `COUNTROWS(Reviews)` est supérieur à `DISTINCTCOUNT(review_id)`, la formulation « occurrence d'avis normalisée » est méthodologiquement plus solide.
-
-**Quatrièmement, j'ai corrigé le statut du projet.** L'ancien README annonçait « Passage aux mesures analytiques » et répétait `Average Rating`, alors que notre vraie prochaine étape est Python/NLP. :contentReference[oaicite:6]{index=6} La nouvelle version reflète maintenant exactement notre progression : **DAX de référence terminé → Python/NLP en cours → DAX analytique ensuite → recommandations finales**.
-
-Avec cette version, ton README ne fait plus seulement « portfolio joli » : il explique aussi **les hypothèses, la granularité, les limites et les choix méthodologiques**. C'est précisément ce qui le rend défendable en entretien.
+L'objectif n'est pas d'établir des relations causales, mais d'identifier des **tendances, segments, anomalies et signaux exploitables pour l'analyse business**.
