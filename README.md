@@ -822,6 +822,106 @@ Ces valeurs constituent des **références descriptives propres au dataset** et 
 
 ![Prix remisé vs satisfaction client](price_vs_rating_scatter.png)
 
+### 9.2 🎯 Discounts & Perceived Value
+
+Cette analyse cherche à déterminer si les remises élevées sont associées à une meilleure satisfaction client, et si les avis positifs semblent davantage liés à un effet d'aubaine (`Price / Value`) ou à des caractéristiques intrinsèques du produit.
+
+La page Power BI dédiée à cet axe contient trois visualisations complémentaires :
+
+1. **Discount vs Customer Satisfaction**
+2. **Customer Sentiment by Review Theme**
+3. **Positive Reviews by Theme**
+
+---
+
+#### 9.2.1 Discount vs Customer Satisfaction
+
+Un nuage de points a été utilisé pour analyser la relation entre :
+
+- **Axe X :** `discount_percentage`
+- **Axe Y :** `rating`
+- **Granularité :** produit
+- **Benchmark vertical :** remise moyenne globale
+- **Benchmark horizontal :** rating moyen global
+- **Ligne de tendance :** tendance linéaire globale
+
+Le coefficient de corrélation de Pearson calculé dans Power BI est :
+
+**r = -0,160**
+
+Cette valeur indique une **faible association linéaire négative** entre le niveau de remise et le rating.
+
+Les produits bénéficiant de remises plus importantes tendent légèrement à avoir des ratings plus faibles, mais cette tendance reste faible et la dispersion des observations est importante.
+
+> **Une remise élevée n'est donc pas associée, dans ce dataset, à une satisfaction client nettement supérieure.**
+
+Cette relation reste descriptive et ne permet pas d'établir un lien causal entre remise et satisfaction.
+
+---
+
+#### 9.2.2 Customer Sentiment by Review Theme
+
+Un graphique en barres empilées à 100 % a ensuite été utilisé pour comparer la répartition des sentiments au sein de chaque thème d'avis.
+
+Les principales proportions positives observées sont :
+
+- **Price / Value : 74,03 %**
+- **Performance : 62,11 %**
+- **Ease of Use : 75,17 %**
+- **Reliability / Functionality : 67,52 %**
+- **Quality : 72,50 %**
+- **Durability : 86,31 %**
+
+À l'inverse, le thème :
+
+- **Defect / Problem : 87,30 % d'avis négatifs**
+
+Le thème `Price / Value` est donc fortement associé à des avis positifs, mais plusieurs caractéristiques intrinsèques du produit présentent également une forte proportion de sentiment positif.
+
+La **durabilité** se distingue notamment avec **86,31 % d'avis positifs** parmi les avis classés dans ce thème.
+
+---
+
+#### 9.2.3 Positive Reviews by Theme
+
+Pour compléter l'analyse des proportions, un second graphique a été créé afin de mesurer le **volume d'avis positifs par thème**.
+
+Le graphique est filtré sur :
+
+- `review_sentiment = Positive`
+
+La catégorie `General / Other` a été exclue de cette visualisation car elle représente une catégorie résiduelle sans thème spécifique identifiable.
+
+Les principaux volumes d'avis positifs sont :
+
+- **Price / Value : 1 824**
+- **Performance : 936**
+- **Ease of Use : 651**
+- **Reliability / Functionality : 499**
+- **Durability : 372**
+- **Quality : 369**
+- **Defect / Problem : 44**
+
+`Price / Value` est donc le **thème spécifique le plus fréquent parmi les avis positifs**.
+
+Cependant, le volume ne doit pas être confondu avec le taux de positivité. Par exemple, `Durability` compte moins d'avis positifs en volume, mais présente une proportion positive plus élevée que `Price / Value`.
+
+---
+
+#### 💡 Conclusion de l'axe
+
+Les résultats ne montrent pas qu'une remise élevée soit associée à une meilleure satisfaction client. La relation entre remise et rating est au contraire légèrement négative et faible :
+
+**r = -0,160**
+
+En revanche, le rapport qualité-prix ressort comme un thème important dans les avis positifs, avec **1 824 avis positifs classés `Price / Value`**.
+
+La satisfaction observée ne semble toutefois pas reposer uniquement sur un effet d'aubaine. Des caractéristiques intrinsèques comme la **durabilité**, la **facilité d'utilisation**, la **qualité**, la **performance** et la **fiabilité** contribuent également fortement aux avis positifs.
+
+> **Le rapport qualité-prix apparaît comme un moteur important de satisfaction perçue, mais la qualité intrinsèque du produit reste également déterminante dans les signaux exprimés par les avis clients.**
+
+Ces résultats doivent être interprétés comme des **associations descriptives**. Les classifications `review_theme` et `review_sentiment` reposent sur une approche lexicale déterministe, validée dans Orange Data Mining sur un échantillon manuel de 400 avis avec **70 % de concordance** avec la référence humaine.
+
 
 #### 🔎 Observations
 
