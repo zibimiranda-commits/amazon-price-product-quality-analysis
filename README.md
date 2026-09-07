@@ -782,8 +782,71 @@ Ces résultats constituent des **signaux analytiques à explorer dans les visual
 
 ---
 
-## 📊 9. Visualisations Power BI — En Cours
+## 📊 9. Visualisations & Analyse Power BI
 
+La phase de visualisation transforme les mesures descriptives et analytiques en analyses permettant d'explorer les relations entre prix, remises, satisfaction, engagement et contenu des avis clients.
+
+Les visualisations sont organisées autour des axes suivants :
+
+1. **Prix et satisfaction**
+2. **Effet d'aubaine vs qualité intrinsèque**
+3. **Remises et engagement client**
+4. **Identification des signaux de faiblesse**
+5. **Synthèse et recommandations**
+
+Les résultats sont interprétés comme des **associations, tendances et signaux observés dans le dataset**, et non comme des relations causales.
+
+---
+
+### 9.1 💰 Prix remisé vs satisfaction client
+
+Cette première analyse examine la relation entre le **prix remisé d'un produit** et son niveau de satisfaction, représenté par son `rating`.
+
+Le nuage de points a été construit avec :
+
+- **Axe X :** prix remisé (`discounted_price`)
+- **Axe Y :** rating (`rating`)
+- **Granularité :** produit (`product_id`)
+- **Benchmark vertical :** prix remisé moyen global
+- **Benchmark horizontal :** rating moyen global
+- **Ligne de tendance :** tendance linéaire globale
+
+Les deux benchmarks permettent de positionner chaque produit par rapport aux valeurs moyennes du dataset :
+
+- **Prix remisé moyen : ≈ ₹3,31K**
+- **Rating moyen : 4,09 / 5**
+
+Ces valeurs constituent des **références descriptives propres au dataset** et ne représentent pas des seuils universels de bonne ou de mauvaise performance.
+
+#### 📸 Visualisation
+
+![Prix remisé vs satisfaction client](price_vs_rating_scatter.png)
+
+#### 🔎 Observations
+
+Le nuage de points montre une forte concentration des produits dans une plage de ratings située principalement autour de **3,5 à 4,5**.
+
+La ligne de tendance présente une **légère pente positive**, suggérant que les produits dont le prix remisé est plus élevé tendent à obtenir des ratings légèrement supérieurs.
+
+Cependant, la dispersion importante des observations montre que cette relation reste limitée : des produits présentant des niveaux de prix similaires peuvent avoir des ratings différents, et les produits les plus chers ne sont pas systématiquement les mieux notés.
+
+Lors de l'exploration par catégorie, **Home & Kitchen** et **Electronics** apparaissaient particulièrement présentes parmi les produits situés au-dessus du prix remisé moyen. Cette observation reste descriptive et ne permet pas d'attribuer les différences de satisfaction au prix ou à la catégorie.
+
+#### 📐 Corrélation prix remisé / rating
+
+Afin de compléter l'observation visuelle, le coefficient de corrélation de Pearson entre le prix remisé et le rating a été calculé dans Power BI.
+
+**Coefficient de corrélation : r = 0,127**
+
+Cette valeur indique une **faible association linéaire positive** entre les deux variables.
+
+Les produits plus chers tendent donc légèrement à être mieux notés, mais le niveau de prix remisé est **faiblement associé, à lui seul, aux différences de satisfaction observées dans le dataset**.
+
+La corrélation ne démontre pas de causalité : ce résultat ne signifie pas qu'une augmentation du prix entraîne une augmentation de la satisfaction.
+
+#### 💡 Conclusion de l'analyse
+
+> **Le prix remisé et le rating présentent une faible association positive (r = 0,127). Les produits plus chers tendent légèrement à être mieux notés, mais la forte dispersion des observations montre que le prix remisé seul est faiblement associé au niveau de satisfaction.**
 La phase actuelle du projet consiste à transformer les mesures descriptives et analytiques en visualisations Power BI.
 
 Les visualisations seront organisées autour des axes suivants :
