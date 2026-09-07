@@ -820,7 +820,6 @@ Ces valeurs constituent des **références descriptives propres au dataset** et 
 
 #### 📸 Visualisation
 
-![Prix remisé vs satisfaction client](price_vs_rating_scatter.png)
 
 #### 🔎 Observations
 
