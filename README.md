@@ -906,6 +906,10 @@ Les principaux volumes d'avis positifs sont :
 
 Cependant, le volume ne doit pas être confondu avec le taux de positivité. Par exemple, `Durability` compte moins d'avis positifs en volume, mais présente une proportion positive plus élevée que `Price / Value`.
 
+#### 📊 Discounts & Perceived Value — Power BI Dashboard
+
+![Discounts & Perceived Value Dashboard](discounts_perceived_value_dashboard.png)
+
 ---
 
 #### 💡 Conclusion de l'axe
