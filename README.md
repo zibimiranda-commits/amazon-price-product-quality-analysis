@@ -278,7 +278,7 @@ Un même produit peut donc apparaître plusieurs fois dans la table lorsqu'il es
 
 La formulation **« occurrence d'avis normalisée »** est utilisée car le nombre de lignes de `Reviews` et le nombre de `review_id` distincts ne sont pas exactement identiques.
 
-**Volume total : 10 734 lignes.**
+**Volume total : 10 582 occurrences d'avis normalisées.**
 
 #### 📸 Résultat final de la normalisation
 
@@ -288,13 +288,13 @@ La formulation **« occurrence d'avis normalisée »** est utilisée car le nomb
 
 ### 🧠 4.7 Classification exploratoire des avis dans Power Query
 
-Avant le traitement NLP sous Python, deux colonnes d'enrichissement ont été créées dans Power Query à partir de la combinaison :
+Afin d'enrichir les avis clients pour l'analyse, deux colonnes de classification ont été créées dans Power Query à partir de la combinaison :
 
 `review_title + review_content`
 
-Ces classifications reposent sur des **règles lexicales et des mots-clés**.
+Ces classifications reposent sur des **règles lexicales déterministes et des mots-clés**.
 
-Elles ne constituent pas un modèle de machine learning ou un modèle NLP entraîné.
+Elles ne constituent pas un modèle de machine learning ou un modèle NLP entraîné et seront ensuite évaluées à l'aide d'un échantillon annoté manuellement dans Orange Data Mining.
 
 #### 🏷️ `review_theme`
 
@@ -340,7 +340,7 @@ Les classifications `review_theme` et `review_sentiment` sont **heuristiques**.
 
 Elles permettent une première exploration, mais peuvent produire des erreurs liées au contexte, à la polysémie ou aux formulations complexes.
 
-Elles seront donc comparées à une approche NLP indépendante sous Python.
+Ces classifications constituent des signaux analytiques exploratoires. La classification `review_sentiment` a ensuite été évaluée dans Orange Data Mining sur un échantillon aléatoire reproductible de 400 avis annotés manuellement.
 
 ---
 
@@ -366,14 +366,11 @@ Aucune dimension Date artificielle n'a donc été créée.
 
 ### 🗂️ 5.1 Structure du modèle de données
 
-Le modèle repose principalement sur deux tables :
+Le modèle repose sur trois tables principales :
 
-- **`Products`** — table de référence des produits ;
-- **`Reviews`** — table contenant les occurrences d'avis normalisées.
-
-Une structure dédiée à l'analyse NLP a également été préparée :
-
-- **`Reviews_NLP`** — table destinée à l'export et à l'analyse NLP sous Python.
+- **`Products`** — table de référence contenant une ligne par produit ;
+- **`reviews`** — table contenant les occurrences d'avis normalisées et les informations associées aux utilisateurs ;
+- **`reviews_analysis`** — table dédiée à l'analyse des avis, contenant notamment les classifications lexicales `review_theme` et `review_sentiment`.
 
 #### `Products`
 
@@ -389,11 +386,15 @@ La table contient **1 348 produits uniques**.
 
 > **1 ligne = 1 occurrence d'avis normalisée associée à un produit et à un utilisateur.**
 
-La table contient **10 734 lignes**.
+ La table contient **10 582 occurrences d'avis normalisées**.
 
-#### `Reviews_NLP`
+#### `Reviews_analysis`
 
-La table préparée pour Python contient actuellement :
+#### `reviews_analysis`
+
+Cette table est dédiée à l'analyse des avis clients dans Power BI et à la validation de la classification du sentiment avec Orange Data Mining.
+
+Elle contient les colonnes suivantes :
 
 - `product_id`
 - `review_id`
@@ -402,19 +403,24 @@ La table préparée pour Python contient actuellement :
 - `review_content`
 - `review_sentiment`
 
-Elle contient également **10 734 lignes**.
+**Granularité :**
+
+> **1 ligne = 1 occurrence d'avis normalisée utilisée pour l'analyse.**
+
+La table contient **10 582 lignes**.
 
 ---
 
 ### 🔗 5.2 Relation entre les tables
 
 La relation principale repose sur `product_id`.
-
 ```text
-Products (1) ─────────── (*) Reviews
+Products (1) ─────────── (*) reviews
+     │
+     └─────────────── (*) reviews_analysis
 ```
 
-La cardinalité est donc 1-à-plusieurs.
+Les deux relations reposent sur `product_id` avec une cardinalité **1-à-plusieurs** depuis `Products`.
 
 Ainsi :
 
@@ -545,7 +551,7 @@ Reviews Count =
 COUNTROWS(Reviews)
 ```
 
-Valeur exacte : 10 734 lignes
+Valeur exacte : **10 582 occurrences d'avis normalisées**.
 
 Power BI peut afficher cette valeur sous forme abrégée : ≈ 11 K.
 
@@ -578,7 +584,7 @@ Axe	Mesure DAX	Table	Description	Valeur observée
 📦 Produits	Product Count	Products	Nombre de produits uniques	1 348
 📊 Évaluations	Total Rating Count	Products	Volume total d'évaluations	—
 📊 Évaluations	Average Rating Count	Products	Nombre moyen d'évaluations par produit	≈ 17,66 K
-💬 Avis	Reviews Count	Reviews	Nombre de lignes d'avis normalisées	10 734
+💬 Avis	Reviews Count	Reviews	Nombre de lignes d'avis normalisées	10 582
 💬 Avis uniques	Distinct Review Count	Reviews	Nombre de review_id distincts	≈ 9 K
 👤 Utilisateurs	Distinct User Count	Reviews	Nombre d'utilisateurs distincts	≈ 9 K
 
@@ -822,6 +828,23 @@ Ces valeurs constituent des **références descriptives propres au dataset** et 
 
 ![Prix remisé vs satisfaction client](price_vs_rating_scatter.png)
 
+
+#### 📐 Corrélation prix remisé / rating
+
+Afin de compléter l'observation visuelle, le coefficient de corrélation de Pearson entre le prix remisé et le rating a été calculé dans Power BI.
+
+**Coefficient de corrélation : r = 0,127**
+
+Cette valeur indique une **faible association linéaire positive** entre les deux variables.
+
+Les produits plus chers tendent donc légèrement à être mieux notés, mais le niveau de prix remisé est **faiblement associé, à lui seul, aux différences de satisfaction observées dans le dataset**.
+
+La corrélation ne démontre pas de causalité : ce résultat ne signifie pas qu'une augmentation du prix entraîne une augmentation de la satisfaction.
+
+#### 💡 Conclusion de l'analyse
+
+> **Le prix remisé et le rating présentent une faible association positive (r = 0,127). Les produits plus chers tendent légèrement à être mieux notés, mais la forte dispersion des observations montre que le prix remisé seul est faiblement associé au niveau de satisfaction.**
+
 ### 9.2 🎯 Discounts & Perceived Value
 
 Cette analyse cherche à déterminer si les remises élevées sont associées à une meilleure satisfaction client, et si les avis positifs semblent davantage liés à un effet d'aubaine (`Price / Value`) ou à des caractéristiques intrinsèques du produit.
@@ -912,6 +935,42 @@ Cependant, le volume ne doit pas être confondu avec le taux de positivité. Par
 
 ---
 
+---
+
+### 9.3 📊 Discounts & Customer Engagement
+
+Cette analyse cherche à déterminer si le niveau de remise est associé à un niveau d'engagement client plus élevé.
+
+Dans cet axe, l'engagement client est représenté par `rating_count`, c'est-à-dire le **nombre d'évaluations reçues par chaque produit sur la marketplace**. Cette variable constitue ici un **proxy d'engagement** et ne représente ni le nombre d'avis textuels normalisés ni un volume de ventes.
+
+#### 9.3.1 Discount vs Customer Engagement
+
+Un nuage de points a été utilisé pour analyser la relation entre :
+
+- **Axe X :** `discount_percentage`
+- **Axe Y :** `rating_count`
+- **Granularité :** produit (`product_id`)
+- **Benchmark vertical :** remise moyenne globale
+- **Benchmark horizontal :** médiane du nombre d'évaluations
+- **Ligne de tendance :** tendance linéaire globale
+
+Le graphique montre une forte concentration de produits avec un nombre d'évaluations relativement faible, ainsi que quelques produits présentant des volumes d'évaluations beaucoup plus élevés.
+
+La ligne de tendance apparaît pratiquement horizontale.
+
+Afin de compléter cette observation visuelle, le coefficient de corrélation de Pearson entre le taux de remise et `rating_count` a été calculé dans Power BI :
+
+**r ≈ 0,003**
+
+Cette valeur indique une **association linéaire pratiquement nulle** entre le niveau de remise et le nombre d'évaluations reçues par les produits dans ce dataset.
+
+Les produits bénéficiant de remises plus importantes ne présentent donc pas systématiquement un niveau d'engagement plus élevé.
+
+La distribution de `rating_count` étant fortement asymétrique et comportant des valeurs extrêmes, le coefficient de Pearson doit néanmoins être interprété avec prudence.
+
+> **Dans ce dataset, le niveau de remise ne présente pratiquement aucune association linéaire avec le volume d'évaluations des produits (r ≈ 0,003).**
+>
+> 
 #### 💡 Conclusion de l'axe
 
 Les résultats ne montrent pas qu'une remise élevée soit associée à une meilleure satisfaction client. La relation entre remise et rating est au contraire légèrement négative et faible :
@@ -937,21 +996,6 @@ Cependant, la dispersion importante des observations montre que cette relation r
 
 Lors de l'exploration par catégorie, **Home & Kitchen** et **Electronics** apparaissaient particulièrement présentes parmi les produits situés au-dessus du prix remisé moyen. Cette observation reste descriptive et ne permet pas d'attribuer les différences de satisfaction au prix ou à la catégorie.
 
-#### 📐 Corrélation prix remisé / rating
-
-Afin de compléter l'observation visuelle, le coefficient de corrélation de Pearson entre le prix remisé et le rating a été calculé dans Power BI.
-
-**Coefficient de corrélation : r = 0,127**
-
-Cette valeur indique une **faible association linéaire positive** entre les deux variables.
-
-Les produits plus chers tendent donc légèrement à être mieux notés, mais le niveau de prix remisé est **faiblement associé, à lui seul, aux différences de satisfaction observées dans le dataset**.
-
-La corrélation ne démontre pas de causalité : ce résultat ne signifie pas qu'une augmentation du prix entraîne une augmentation de la satisfaction.
-
-#### 💡 Conclusion de l'analyse
-
-> **Le prix remisé et le rating présentent une faible association positive (r = 0,127). Les produits plus chers tendent légèrement à être mieux notés, mais la forte dispersion des observations montre que le prix remisé seul est faiblement associé au niveau de satisfaction.**
 La phase actuelle du projet consiste à transformer les mesures descriptives et analytiques en visualisations Power BI.
 
 Les visualisations seront organisées autour des axes suivants :
