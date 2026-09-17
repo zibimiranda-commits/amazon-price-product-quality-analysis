@@ -1104,6 +1104,9 @@ Il est important de distinguer les deux sources d'information : `rating_count` r
 
 > **Le taux d'avis négatifs ne représente donc pas la proportion d'évaluations négatives parmi l'ensemble du `rating_count`. Les produits sélectionnés constituent des candidats à investiguer davantage, et non une classification définitive de produits de mauvaise qualité.**
 
+#### 📊 Product Weakness Signals — Power BI Dashboard
+
+![Product Weakness Signals Dashboard](product_weakness_signals.png)
 
 ## 💡 10. Recommandations — À Venir
 
