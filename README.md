@@ -969,8 +969,11 @@ Les produits bénéficiant de remises plus importantes ne présentent donc pas s
 La distribution de `rating_count` étant fortement asymétrique et comportant des valeurs extrêmes, le coefficient de Pearson doit néanmoins être interprété avec prudence.
 
 > **Dans ce dataset, le niveau de remise ne présente pratiquement aucune association linéaire avec le volume d'évaluations des produits (r ≈ 0,003).**
->
-> 
+
+#### 📊 Discounts & Customer Engagement — Power BI Dashboard
+
+![Discounts & Customer Engagement Dashboard](discounts_customer_engagement.png)
+
 #### 💡 Conclusion de l'axe
 
 Les résultats ne montrent pas qu'une remise élevée soit associée à une meilleure satisfaction client. La relation entre remise et rating est au contraire légèrement négative et faible :
@@ -1009,6 +1012,98 @@ Les visualisations seront organisées autour des axes suivants :
 Les conclusions seront formulées uniquement après analyse des visualisations finales.
 
 ---
+
+### 9.4 🚨 Product Weakness Signals
+
+Cette analyse vise à identifier les produits et les catégories présentant plusieurs signaux de faiblesse simultanés, en combinant les évaluations agrégées des produits avec les avis textuels normalisés.
+
+L'objectif n'est pas de qualifier automatiquement certains produits comme étant de mauvaise qualité, mais d'identifier les produits qui méritent une investigation plus approfondie à partir de plusieurs indicateurs convergents.
+
+#### 9.4.1 Low-Rated Products with High Customer Engagement
+
+Un nuage de points a été utilisé pour identifier les produits combinant une note relativement faible avec un volume important d'évaluations clients.
+
+Le graphique repose sur :
+
+- **Axe X :** `rating`
+- **Axe Y :** `rating_count`
+- **Granularité :** produit (`product_id`)
+- **Benchmark vertical :** note moyenne globale de **4,09**
+- **Benchmark horizontal :** médiane du nombre d'évaluations de **468**
+
+La médiane a été privilégiée pour `rating_count` en raison de la forte asymétrie de sa distribution et de la présence de valeurs extrêmes.
+
+Les produits situés à gauche du benchmark de **4,09** et au-dessus du benchmark de **468 évaluations** constituent des produits à examiner en priorité : ils présentent une note inférieure à la moyenne du dataset tout en disposant d'un volume d'évaluations supérieur à la médiane.
+
+> **Ces seuils constituent des benchmarks internes au dataset et non des seuils universels permettant de qualifier un produit comme étant de mauvaise qualité.**
+>
+> #### 9.4.2 Negative Reviews by Theme
+
+Afin de comprendre la nature des signaux négatifs observés dans les avis textuels, le nombre d'avis classés négatifs a été analysé selon `review_theme`.
+
+Les principaux volumes observés sont :
+
+- **Defect / Problem : 488 avis négatifs**
+- **Price / Value : 311**
+- **Performance : 276**
+- **General / Other : 274**
+- **Ease of Use : 95**
+- **Reliability / Functionality : 72**
+- **Quality : 67**
+- **Durability : 36**
+
+Le thème **Defect / Problem** concentre ainsi le plus grand nombre d'avis classés négatifs, devant **Price / Value** et **Performance**.
+
+Ces résultats représentent des **volumes absolus d'avis négatifs**. Ils ne doivent donc pas être interprétés comme des taux de négativité propres à chaque thème.
+
+> **Les problèmes liés aux défauts constituent le principal thème observé parmi les avis classés négatifs dans ce dataset.**
+
+#### 9.4.3 Negative Reviews by Main Category
+
+Le volume d'avis classés négatifs a également été analysé selon la catégorie principale des produits.
+
+Les volumes observés sont :
+
+- **Electronics : 677 avis négatifs**
+- **Home&Kitchen : 530**
+- **Computers&Accessories : 385**
+- **Officeproducts : 21**
+- **Homeimprovement : 3**
+- **Musicalinstruments : 2**
+- **Car&Motorbike : 1**
+
+Les avis négatifs sont donc principalement concentrés dans les catégories **Electronics**, **Home&Kitchen** et **Computers&Accessories**.
+
+Cette comparaison repose toutefois sur des **volumes absolus**. Une catégorie comportant davantage de produits ou d'avis peut mécaniquement générer davantage d'avis négatifs. Ces résultats ne permettent donc pas de conclure que les catégories présentant les volumes les plus élevés possèdent nécessairement un taux de satisfaction plus faible.
+
+> **Cette visualisation permet d'identifier où se concentrent les avis négatifs dans le dataset, mais pas de classer les catégories selon leur qualité.**
+
+#### 9.4.4 Products with Multiple Weakness Signals
+
+Afin d'identifier des produits présentant plusieurs signaux de faiblesse simultanés, une sélection a été construite à partir de trois critères :
+
+- **Average Rating < 4,09** — note inférieure à la moyenne globale du dataset ;
+- **Rating Count > 468** — nombre d'évaluations supérieur à la médiane du dataset ;
+- **Negative Reviews > Positive Reviews** — davantage d'avis textuels classés négatifs que positifs parmi les occurrences d'avis normalisées disponibles pour le produit.
+
+Le tableau présente ensuite, pour chaque produit retenu :
+
+- `Product ID`
+- `Main Category`
+- `Average Rating`
+- `Rating Count`
+- `Negative Review Rate`
+- `Negative Reviews`
+- `Positive Reviews`
+
+Les produits sont triés par nombre d'avis négatifs décroissant.
+
+Cette approche permet de rechercher des **signaux convergents** : une note inférieure à la moyenne, une exposition importante mesurée par `rating_count` et une balance des avis textuels davantage orientée vers le négatif que vers le positif.
+
+Il est important de distinguer les deux sources d'information : `rating_count` représente le nombre total d'évaluations reçues par le produit sur la marketplace, tandis que `Negative Reviews`, `Positive Reviews` et `Negative Review Rate` sont calculés à partir des occurrences d'avis textuels normalisées disponibles dans le dataset.
+
+> **Le taux d'avis négatifs ne représente donc pas la proportion d'évaluations négatives parmi l'ensemble du `rating_count`. Les produits sélectionnés constituent des candidats à investiguer davantage, et non une classification définitive de produits de mauvaise qualité.**
+
 
 ## 💡 10. Recommandations — À Venir
 
