@@ -911,7 +911,7 @@ Pour compléter l'analyse des proportions, un second graphique a été créé af
 
 Le graphique est filtré sur :
 
-- `review_sentiment = Positive`
+ - `review_sentiment = positive`
 
 La catégorie `General / Other` a été exclue de cette visualisation car elle représente une catégorie résiduelle sans thème spécifique identifiable.
 
@@ -925,15 +925,13 @@ Les principaux volumes d'avis positifs sont :
 - **Quality : 369**
 - **Defect / Problem : 44**
 
-`Price / Value` est donc le **thème spécifique le plus fréquent parmi les avis positifs**.
+`Price / Value` est donc le **thème spécifique le plus fréquent parmi les avis classés positifs**.
 
 Cependant, le volume ne doit pas être confondu avec le taux de positivité. Par exemple, `Durability` compte moins d'avis positifs en volume, mais présente une proportion positive plus élevée que `Price / Value`.
 
 #### 📊 Discounts & Perceived Value — Power BI Dashboard
 
 ![Discounts & Perceived Value Dashboard](discounts_perceived_value_dashboard.png)
-
----
 
 ---
 
@@ -999,8 +997,7 @@ Cependant, la dispersion importante des observations montre que cette relation r
 
 Lors de l'exploration par catégorie, **Home & Kitchen** et **Electronics** apparaissaient particulièrement présentes parmi les produits situés au-dessus du prix remisé moyen. Cette observation reste descriptive et ne permet pas d'attribuer les différences de satisfaction au prix ou à la catégorie.
 
-La phase actuelle du projet consiste à transformer les mesures descriptives et analytiques en visualisations Power BI.
-
+Les mesures descriptives et analytiques ont ensuite été intégrées dans des visualisations Power BI afin d'explorer les relations entre prix, remises, satisfaction client, engagement et signaux de faiblesse produit.
 Les visualisations seront organisées autour des axes suivants :
 
 1. **Prix et satisfaction**
@@ -1029,15 +1026,15 @@ Le graphique repose sur :
 - **Axe Y :** `rating_count`
 - **Granularité :** produit (`product_id`)
 - **Benchmark vertical :** note moyenne globale de **4,09**
-- **Benchmark horizontal :** médiane du nombre d'évaluations de **468**
+- **Benchmark horizontal :** médiane du nombre d'évaluations de **4 740**
 
 La médiane a été privilégiée pour `rating_count` en raison de la forte asymétrie de sa distribution et de la présence de valeurs extrêmes.
 
-Les produits situés à gauche du benchmark de **4,09** et au-dessus du benchmark de **468 évaluations** constituent des produits à examiner en priorité : ils présentent une note inférieure à la moyenne du dataset tout en disposant d'un volume d'évaluations supérieur à la médiane.
+Les produits situés à gauche du benchmark de **4,09** et au-dessus du benchmark de **4 740 évaluations** constituent des produits à examiner en priorité : ils présentent une note inférieure à la moyenne du dataset tout en disposant d'un volume d'évaluations supérieur à la médiane.
 
 > **Ces seuils constituent des benchmarks internes au dataset et non des seuils universels permettant de qualifier un produit comme étant de mauvaise qualité.**
->
-> #### 9.4.2 Negative Reviews by Theme
+
+ #### 9.4.2 Negative Reviews by Theme
 
 Afin de comprendre la nature des signaux négatifs observés dans les avis textuels, le nombre d'avis classés négatifs a été analysé selon `review_theme`.
 
@@ -1083,7 +1080,7 @@ Cette comparaison repose toutefois sur des **volumes absolus**. Une catégorie c
 Afin d'identifier des produits présentant plusieurs signaux de faiblesse simultanés, une sélection a été construite à partir de trois critères :
 
 - **Average Rating < 4,09** — note inférieure à la moyenne globale du dataset ;
-- **Rating Count > 468** — nombre d'évaluations supérieur à la médiane du dataset ;
+- **Rating Count > 4740**   — nombre d'évaluations supérieur à la médiane du dataset ;
 - **Negative Reviews > Positive Reviews** — davantage d'avis textuels classés négatifs que positifs parmi les occurrences d'avis normalisées disponibles pour le produit.
 
 Le tableau présente ensuite, pour chaque produit retenu :
@@ -1098,7 +1095,7 @@ Le tableau présente ensuite, pour chaque produit retenu :
 
 Les produits sont triés par nombre d'avis négatifs décroissant.
 
-Cette approche permet de rechercher des **signaux convergents** : une note inférieure à la moyenne, une exposition importante mesurée par `rating_count` et une balance des avis textuels davantage orientée vers le négatif que vers le positif.
+Cette approche permet de rechercher des **signaux convergents** : un rating inférieur à la moyenne globale de **4,09**, un nombre d'évaluations supérieur à la médiane globale de **4 740**, et davantage d'avis textuels classés négatifs que positifs.
 
 Il est important de distinguer les deux sources d'information : `rating_count` représente le nombre total d'évaluations reçues par le produit sur la marketplace, tandis que `Negative Reviews`, `Positive Reviews` et `Negative Review Rate` sont calculés à partir des occurrences d'avis textuels normalisées disponibles dans le dataset.
 
@@ -1254,11 +1251,11 @@ amazon-price-product-quality-analysis/
 - Analyse de la matrice de confusion
 - Analyse des 120 désaccords
 - Création des principales mesures DAX analytiques et benchmarks
+-  Création et analyse des visualisations Power BI pour les axes 1 à 4
 
-### 🔄 Étape en cours
+- ### 🔄 Étape en cours
 
-- Construction des visualisations Power BI
-- Analyse des résultats par produit et catégorie
+- Synthèse des résultats et formulation des recommandations
 
 ### ⏭️ Prochaines étapes
 
