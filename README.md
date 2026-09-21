@@ -1260,32 +1260,25 @@ Les analyses permettent d'identifier des **associations, tendances et signaux**,
 - **Git / GitHub** — documentation et gestion du projet
 
 ---
-
 ## 📁 13. Structure du Dépôt
 
 ```text
 amazon-price-product-quality-analysis/
 │
-├── data/
-│   └── amazon.csv
-│
-├── powerbi/
-│   └── Amazon portfolio avancé.pbix
-│
-├── screenshots/
-│   ├── Screenshot (102).png
-│   ├── Data_Quality.png
-│   ├── Duplicate_identification.png
-│   ├── category_split.png
-│   ├── unpivot_pivot_process.png
-│   ├── reviews_transformation.png
-│   └── test_filtre.png
-│
+├── Data_Quality.png
+├── Duplicate_identification.png
+├── Screenshot (102).png
+├── category_split.png
+├── discounts_customer_engagement.png
+├── discounts_perceived_value_dashboard.png
+├── orange_sentiment_validation_workflow.png
+├── price_vs_rating_scatter.png
+├── product_weakness_signals.png
+├── reviews_transformation.png
+├── test_filtre.png
+├── unpivot_pivot_process.png
 └── README.md
 ```
-
-> La structure du dépôt sera mise à jour si les fichiers de validation Orange et les captures correspondantes sont ajoutés au repository.
-
 ---
 
 ## ✅ 14. Statut Actuel du Projet
