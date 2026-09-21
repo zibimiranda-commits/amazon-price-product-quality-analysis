@@ -1010,9 +1010,6 @@ Les visualisations seront organisées autour des axes suivants :
 3. **Remises et engagement client**
 4. **Identification des signaux de faiblesse**
 5. **Synthèse et recommandations**
-
-Les conclusions seront formulées uniquement après analyse des visualisations finales.
-
 ---
 
 ### 9.4 🚨 Product Weakness Signals
@@ -1112,72 +1109,82 @@ Il est important de distinguer les deux sources d'information : `rating_count` r
 
 ## 💡 10. Recommandations
 
-Les analyses réalisées mettent en évidence plusieurs pistes d'action. Ces recommandations reposent sur les associations observées dans le dataset et doivent être interprétées comme des **priorités d'investigation**, et non comme des relations causales.
+Les analyses réalisées mettent en évidence plusieurs pistes d'action. Ces recommandations reposent sur les relations observées dans le jeu de données et doivent être considérées comme des orientations d'investigation plutôt que comme des conclusions causales.
 
-### 10.1 Prioriser l'analyse des produits cumulant plusieurs signaux de faiblesse
+### 10.1 Prioriser les produits cumulant plusieurs signaux de faiblesse
 
-Les produits identifiés dans l'axe **Product Weakness Signals** combinent trois critères :
+L'analyse a permis d'identifier des produits présentant simultanément plusieurs signaux :
 
-- un rating inférieur à la moyenne globale de **4,09** ;
-- un `rating_count` supérieur à la médiane globale de **4 740** ;
+- une note inférieure à la moyenne globale de **4,09** ;
+- un nombre d'évaluations supérieur à la médiane globale de **4 740** ;
 - davantage d'avis textuels classés négatifs que positifs.
 
-Ces produits peuvent être examinés en priorité afin d'identifier les causes concrètes de leur niveau de satisfaction inférieur à la moyenne.
+La combinaison de ces indicateurs permet de concentrer l'investigation sur des produits fortement évalués sur la marketplace mais présentant également des signaux d'insatisfaction.
 
-Cette approche permet de concentrer l'analyse sur des produits disposant d'un volume d'évaluations supérieur à la médiane, plutôt que sur des produits faiblement notés mais très peu évalués.
+Il est recommandé d'examiner en priorité les avis associés à ces produits afin d'identifier les problèmes récurrents : défauts, performance, qualité, prix ou valeur perçue.
 
-### 10.2 Investiguer en priorité les problèmes liés aux défauts et à la performance
+Ces critères constituent des signaux de priorisation et ne suffisent pas, à eux seuls, à conclure qu'un produit est de mauvaise qualité.
 
-L'analyse des avis classés négatifs montre que les thèmes les plus représentés sont :
 
-- **Defect / Problem : 488 avis négatifs**
+### 10.2 Identifier les produits et catégories derrière les principaux thèmes négatifs
+
+Les plus grands volumes d'avis classés négatifs concernent notamment :
+
+- **Defect / Problem : 488**
 - **Price / Value : 311**
 - **Performance : 276**
-- **General / Other : 274**
 
-Les thèmes **Defect / Problem** et **Performance** peuvent donc constituer des points de départ prioritaires pour examiner les causes de mécontentement dans les avis textuels.
+Ces résultats suggèrent de poursuivre l'analyse au niveau des catégories puis des produits afin d'identifier où chacun de ces problèmes se concentre réellement.
 
-Selon les produits concernés, cette investigation peut porter notamment sur la fiabilité, le fonctionnement, la conformité aux attentes ou la qualité perçue.
+Pour les problèmes liés aux défauts et à la performance, des données complémentaires pourraient ensuite permettre d'étudier les causes opérationnelles, par exemple la qualité produit ou les fournisseurs concernés.
 
-### 10.3 Examiner la proposition de valeur au-delà du niveau de remise
+Pour les problèmes liés au prix ou à la valeur perçue, l'analyse pourrait être complétée par des données telles que les prix concurrents, les coûts fournisseurs ou les marges afin d'évaluer le positionnement prix des produits concernés.
 
-Le taux de remise présente une faible association négative avec le rating :
 
-**r ≈ -0,160**
+### 10.3 Ne pas utiliser les remises comme levier automatique de satisfaction ou d'engagement
 
-Par ailleurs, la relation entre le taux de remise et `rating_count` est pratiquement nulle :
+L'analyse montre :
 
-**r ≈ 0,003**
+- une faible association négative entre le taux de remise et la note moyenne (**r ≈ -0,160**) ;
+- une association linéaire pratiquement inexistante entre le taux de remise et le nombre d'évaluations (**r ≈ 0,003**).
 
-Dans ce dataset, une remise plus importante n'est donc pas systématiquement associée à une meilleure satisfaction ni à un volume d'évaluations plus élevé.
+Dans les données analysées, les produits bénéficiant de remises plus importantes ne sont donc pas systématiquement associés à de meilleures notes ou à un nombre d'évaluations plus élevé.
 
-Il est ainsi préférable d'examiner les remises conjointement avec d'autres indicateurs, notamment le rating, les thèmes des avis et le sentiment classifié, plutôt que de considérer le niveau de remise comme un signal suffisant de satisfaction ou d'engagement.
+Avant d'augmenter les remises de manière généralisée, il serait préférable d'identifier les produits concernés et d'analyser les retours clients afin de déterminer si les difficultés observées sont davantage liées au prix, à la qualité, aux défauts ou à la performance.
 
-### 10.4 Approfondir les catégories concentrant le plus grand volume d'avis négatifs
+Une remise peut modifier le prix payé, mais elle ne corrige pas nécessairement un problème de qualité ou de performance.
 
-Les volumes d'avis classés négatifs sont principalement concentrés dans :
+Ces résultats décrivent des associations statistiques et ne permettent pas d'établir une relation de causalité.
+
+
+### 10.4 Comparer les catégories en tenant compte des proportions
+
+Les catégories présentant les plus grands volumes d'avis classés négatifs sont :
 
 - **Electronics : 677**
 - **Home&Kitchen : 530**
 - **Computers&Accessories : 385**
 
-Ces catégories peuvent faire l'objet d'une analyse plus détaillée afin d'identifier les produits et thèmes responsables de cette concentration.
+Ces volumes absolus ne permettent toutefois pas de conclure qu'une catégorie présente une moins bonne qualité qu'une autre.
 
-Ces résultats correspondent toutefois à des **volumes absolus**. Ils ne permettent pas, à eux seuls, de conclure que ces catégories présentent un taux de problèmes plus élevé, car leur volume total de produits et d'avis peut également être plus important.
+Une catégorie comportant davantage d'avis au total peut mécaniquement concentrer davantage d'avis négatifs.
 
-### 10.5 Utiliser les avis textuels comme outil de diagnostic complémentaire
+Il serait donc pertinent de compléter cette comparaison par le **taux d'avis négatifs parmi les avis textuels analysés dans chaque catégorie**, ainsi que par la répartition entre avis positifs, neutres et négatifs.
 
-Les ratings agrégés permettent d'identifier les produits présentant des niveaux de satisfaction relativement faibles, tandis que l'analyse des avis textuels apporte des informations supplémentaires sur la nature des problèmes évoqués.
+Cette approche permettrait de distinguer les catégories présentant un volume élevé d'avis négatifs de celles où les avis négatifs représentent réellement une proportion importante des retours analysés.
 
-La combinaison de ces deux sources peut donc être utilisée pour :
 
-- repérer les produits nécessitant une investigation ;
-- identifier les thèmes associés aux avis négatifs ;
-- contextualiser un rating faible avec le contenu des retours clients ;
-- orienter les analyses produit vers les problèmes les plus fréquemment observés.
+### 10.5 Utiliser l'analyse du sentiment comme outil de détection et de priorisation
 
-La classification du sentiment restant une approche lexicale déterministe ayant obtenu **70 % de concordance** avec l'échantillon de validation annoté manuellement, elle doit être considérée comme un signal analytique complémentaire et non comme une mesure parfaite du sentiment réel.
----
+La validation réalisée dans Orange Data Mining sur **400 avis annotés manuellement** a montré une concordance globale de **70 %** entre la classification Power Query et la référence humaine.
+
+La matrice de confusion a également montré que les avis positifs étaient mieux reconnus que les avis négatifs et neutres.
+
+Les taux de sentiment doivent donc être utilisés principalement comme des **signaux permettant d'identifier et de prioriser les produits à investiguer**, et non comme une vérité absolue sur la satisfaction client.
+
+Lorsqu'un produit présente une forte proportion d'avis classés négatifs, il est recommandé de croiser ce résultat avec sa note, son nombre d'évaluations, les thèmes des avis et, pour les décisions importantes, une lecture des avis concernés.
+
+Cette approche permet de combiner les indicateurs quantitatifs avec le contexte fourni par les retours clients avant de prendre une décision commerciale.
 
 ## ⚠️ 11. Limites de l'Analyse
 
@@ -1281,44 +1288,29 @@ amazon-price-product-quality-analysis/
 
 ---
 
-## 🚧 14. Statut Actuel du Projet
+## ✅ 14. Statut Actuel du Projet
 
 ### ✅ Étapes terminées
 
-- Préparation du dataset brut
-- Contrôle de la qualité des données
-- Traitement des valeurs manquantes et erreurs
-- Traitement des doublons au niveau produit
-- Restructuration des catégories
-- Normalisation des avis clients
-- Création des tables `Products` et `reviews`
-- Création de la table `reviews_analysis`
-- Vérification des relations du modèle Power BI
-- Création des mesures DAX descriptives
-- Création de `review_theme`
-- Création de `review_sentiment`
-- Échantillonnage reproductible de 400 avis avec Orange
+- Préparation et contrôle de la qualité du dataset brut
+- Traitement des valeurs manquantes, erreurs et doublons
+- Restructuration des catégories produits
+- Normalisation de 10 582 occurrences d'avis
+- Création des tables `Products`, `reviews` et `reviews_analysis`
+- Construction et vérification du modèle relationnel Power BI
+- Création des mesures DAX descriptives et analytiques
+- Création de `review_theme` et `review_sentiment` dans Power Query
+- Échantillonnage reproductible de 400 avis avec Orange Data Mining
 - Annotation humaine des 400 avis
 - Rapprochement des annotations et prédictions Power Query
-- Validation de `review_sentiment`
-- Analyse de la matrice de confusion
-- Analyse des 120 désaccords
-- Création des principales mesures DAX analytiques et benchmarks
--  Création et analyse des visualisations Power BI pour les axes 1 à 4
+- Validation de `review_sentiment` et analyse de la matrice de confusion
+- Analyse des 120 désaccords de classification
+- Création et interprétation des visualisations Power BI pour les axes 1 à 4
+- Synthèse des résultats et formulation des recommandations métier
 
-- ### 🔄 Étape en cours
+### 🔄 Finalisation
 
-- Synthèse des résultats et formulation des recommandations
-
-### ⏭️ Prochaines étapes
-
-- Finalisation des visualisations Power BI
-- Interprétation des résultats
-- Recommandations métier
-- Finalisation du dashboard
-- Finalisation du portfolio GitHub
-
----
+- Vérification finale du README et de la structure du dépôt GitHub
 
 ## 📈 15. Objectif Final
 
