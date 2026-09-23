@@ -30,7 +30,7 @@ L'objectif du projet est d'analyser les données produits et les avis clients af
 - ⭐ **les évaluations moyennes des produits** ;
 - 💬 **le contenu des avis clients** ;
 - 📊 **le volume d'évaluations** associé aux produits (`rating_count`) ;
-- 📝 **le volume d'avis textuels** disponibles dans la table `Reviews`.
+- 📝 **le volume d'avis textuels** disponibles dans la table `reviews`.
 
 L'analyse cherchera notamment à déterminer si les données suggèrent que les produits fortement remisés présentent une satisfaction comparable à celle des produits moins remisés, tout en identifiant les éventuels signaux de faiblesse liés à la qualité, à la performance, à la durabilité ou à la fiabilité.
 
@@ -161,7 +161,7 @@ Cette structure nécessitait une phase de préparation et de restructuration ava
 - Configuration en **nombre entier**.
 - Cette colonne représente le **nombre d'évaluations associé au produit** dans le dataset.
 
-> `rating_count` ne doit pas être confondu avec le nombre d'avis textuels présents dans la table `Reviews`.
+> `rating_count` ne doit pas être confondu avec le nombre d'avis textuels présents dans la table `reviews`.
 
 ---
 
@@ -213,7 +213,7 @@ L'analyse a montré que certains `product_id` apparaissaient plusieurs fois avec
 Cela a confirmé la nécessité de séparer le modèle en deux niveaux de granularité :
 
 - **`Products` : 1 ligne = 1 produit**
-- **`Reviews` : plusieurs occurrences d'avis peuvent être associées à un produit**
+- **`reviews` : plusieurs occurrences d'avis peuvent être associées à un produit**
 
 Après séparation des informations relatives aux avis, les répétitions ont été traitées au niveau de la table `Products` afin de conserver une seule ligne par `product_id`.
 
@@ -252,7 +252,7 @@ Les libellés des catégories ont également été harmonisés.
 
 ### 💬 4.6 Restructuration des avis clients
 
-Une table dédiée **`Reviews`** a été créée afin de normaliser les informations relatives aux utilisateurs et aux avis.
+Une table dédiée **`reviews`** a été créée afin de normaliser les informations relatives aux utilisateurs et aux avis.
 
 Les principales étapes ont été :
 
@@ -270,19 +270,19 @@ Les principales étapes ont été :
 
 ![Unpivot Pivot Process](unpivot_pivot_process.png)
 
-#### 📌 Granularité de la table `Reviews`
+#### 📌 Granularité de la table `reviews`
 
 > **1 ligne = 1 occurrence d'avis normalisée associée à un produit et à un utilisateur.**
 
 Un même produit peut donc apparaître plusieurs fois dans la table lorsqu'il est associé à plusieurs avis.
 
-La formulation **« occurrence d'avis normalisée »** est utilisée car le nombre de lignes de `Reviews` et le nombre de `review_id` distincts ne sont pas exactement identiques.
+La formulation **« occurrence d'avis normalisée »** est utilisée car le nombre de lignes de `reviews` et le nombre de `review_id` distincts ne sont pas exactement identiques.
 
 **Volume total : 10 582 occurrences d'avis normalisées.**
 
 #### 📸 Résultat final de la normalisation
 
-![Reviews Transformation](reviews_transformation.png)
+![reviews Transformation](reviews_transformation.png)
 
 ---
 
@@ -302,6 +302,7 @@ La colonne `review_theme` cherche à attribuer un **thème principal** à chaque
 
 Les catégories sont :
 
+
 - `Defect / Problem`
 - `Durability`
 - `Price / Value`
@@ -311,18 +312,20 @@ Les catégories sont :
 - `Quality`
 - `General / Other`
 
+  
+
 La classification est actuellement **mono-thème** : un avis reçoit un thème principal.
 
 L'ordre des règles est donc important lorsqu'un même avis contient plusieurs sujets.
 
 #### 🙂 `review_sentiment`
 
-La colonne `review_sentiment` classe les avis selon quatre catégories :
+La règle `review_sentiment` prévoit quatre catégories possibles :
 
-- `Positive`
-- `Negative`
-- `Neutral / Mixed`
-- `No Review`
+- `positive`
+- `negative`
+- `neutral / mixed`
+- `no Review`
 
 Les règles négatives sont évaluées avant les règles positives afin de mieux gérer les commentaires contenant à la fois un terme positif et une plainte claire.
 
@@ -380,15 +383,13 @@ Le modèle repose sur trois tables principales :
 
 La table contient **1 348 produits uniques**.
 
-#### `Reviews`
+#### `reviews`
 
 **Granularité :**
 
 > **1 ligne = 1 occurrence d'avis normalisée associée à un produit et à un utilisateur.**
 
  La table contient **10 582 occurrences d'avis normalisées**.
-
-#### `Reviews_analysis`
 
 #### `reviews_analysis`
 
@@ -425,11 +426,11 @@ Les deux relations reposent sur `product_id` avec une cardinalité **1-à-plusie
 Ainsi :
 
 un produit apparaît une seule fois dans Products ;
-un produit peut être associé à plusieurs lignes dans Reviews.
+un produit peut être associé à plusieurs lignes dans reviews.
 
 ### 📸 Vérification du filtrage entre tables
 
-Un test de filtrage a été réalisé afin de vérifier que la sélection d'un produit dans Products filtre correctement les avis associés dans Reviews.
+Un test de filtrage a été réalisé afin de vérifier que la sélection d'un produit dans Products filtre correctement les avis associés dans reviews.
 
 ![Test Filtre](test_filtre.png)
 
@@ -532,7 +533,7 @@ SUM(Products[rating_count])
 ```
 Cette mesure additionne le nombre d'évaluations indiqué pour les produits.
 
-Elle représente un volume d'évaluations agrégé au niveau produit et ne correspond pas au nombre d'avis textuels présents dans Reviews.
+Elle représente un volume d'évaluations agrégé au niveau produit et ne correspond pas au nombre d'avis textuels présents dans reviews.
 
 #### Average Rating Count
 
@@ -548,7 +549,7 @@ Valeur observée : ≈ 17,66 K
 
 ```dax
 Reviews Count =
-COUNTROWS(Reviews)
+COUNTROWS(reviews)
 ```
 
 Valeur exacte : **10 582 occurrences d'avis normalisées**.
@@ -559,7 +560,7 @@ Power BI peut afficher cette valeur sous forme abrégée : ≈ 11 K.
 
 ```dax
 Distinct Review Count =
-DISTINCTCOUNT(Reviews[review_id])
+DISTINCTCOUNT(reviews[review_id])
 ```
 
 Valeur affichée dans Power BI : ≈ 9 K
@@ -569,7 +570,7 @@ Valeur affichée dans Power BI : ≈ 9 K
 ```dax
 
 Distinct User Count =
-DISTINCTCOUNT(Reviews[user_id])
+DISTINCTCOUNT(reviews[user_id])
 ```
 Valeur affichée dans Power BI : ≈ 9 K
 
@@ -584,9 +585,9 @@ Axe	Mesure DAX	Table	Description	Valeur observée
 📦 Produits	Product Count	Products	Nombre de produits uniques	1 348
 📊 Évaluations	Total Rating Count	Products	Volume total d'évaluations	—
 📊 Évaluations	Average Rating Count	Products	Nombre moyen d'évaluations par produit	≈ 17,66 K
-💬 Avis	Reviews Count	Reviews	Nombre de lignes d'avis normalisées	10 582
-💬 Avis uniques	Distinct Review Count	Reviews	Nombre de review_id distincts	≈ 9 K
-👤 Utilisateurs	Distinct User Count	Reviews	Nombre d'utilisateurs distincts	≈ 9 K
+💬 Avis	Reviews Count reviews	Nombre de lignes d'avis normalisées	10 582
+💬 Avis uniques	Distinct Review Count reviews	Nombre de review_id distincts	≈ 9 K
+👤 Utilisateurs	Distinct User Count reviews	Nombre d'utilisateurs distincts	≈ 9 K
 
 ## 🧪 7. Validation de la Classification du Sentiment avec Orange Data Mining
 
@@ -598,7 +599,7 @@ L'objectif n'était pas d'entraîner un nouveau modèle de sentiment, mais d'év
 
 ### 🎯 Méthodologie de Validation
 
-Un échantillon aléatoire reproductible de **400 avis** a été extrait des **10 582 avis normalisés**.
+Un échantillon aléatoire reproductible de **400 occurrences d'avis** a été extrait des **10 582 occurrences d'avis normalisées**.
 
 Pour éviter que la classification Power Query influence l'annotation humaine, les colonnes `review_sentiment` et `review_theme` ont été masquées lors de la préparation de l'échantillon.
 
@@ -692,7 +693,7 @@ Le rappel observé par classe est approximativement de :
 
 ### 🔎 Analyse des 120 Désaccords
 
-Les **120 avis mal classés** ont été inspectés dans Orange.
+Les **120 avis présentant un désaccord entre la classification Power Query et l'annotation humaine** ont été inspectés dans Orange.
 
 Les six types d'erreurs observés sont :
 
@@ -770,7 +771,7 @@ L'analyse de `rating_count` montre une différence importante entre la moyenne e
 
 ```text
 Average Rating Count ≈ 17,66K
-Median Rating Count  ≈ 4,74K
+Median Rating Count  ≈ 4 740
 ```
 
 La moyenne est donc nettement supérieure à la médiane.
@@ -904,7 +905,7 @@ Les principales proportions positives observées sont :
 
 - **Defect / Problem : 87,30 % d'avis négatifs**
 
-Le thème `Price / Value` est donc fortement associé à des avis positifs, mais plusieurs caractéristiques intrinsèques du produit présentent également une forte proportion de sentiment positif.
+ Le thème `Price / Value` présente donc une forte proportion d'avis classés positifs, tandis que plusieurs thèmes liés aux caractéristiques intrinsèques du produit présentent également une proportion élevée de sentiment positif.
 
 La **durabilité** se distingue notamment avec **86,31 % d'avis positifs** parmi les avis classés dans ce thème.
 
@@ -985,31 +986,12 @@ Les résultats ne montrent pas qu'une remise élevée soit associée à une meil
 
 En revanche, le rapport qualité-prix ressort comme un thème important dans les avis positifs, avec **1 824 avis positifs classés `Price / Value`**.
 
-La satisfaction observée ne semble toutefois pas reposer uniquement sur un effet d'aubaine. Des caractéristiques intrinsèques comme la **durabilité**, la **facilité d'utilisation**, la **qualité**, la **performance** et la **fiabilité** contribuent également fortement aux avis positifs.
+La satisfaction observée ne semble toutefois pas reposer uniquement sur un effet d'aubaine. Des thèmes liés à des caractéristiques intrinsèques comme la **durabilité**, la **facilité d'utilisation**, la **qualité**, la **performance** et la **fiabilité** sont également associés à de nombreux avis classés positifs.
 
-> **Le rapport qualité-prix apparaît comme un moteur important de satisfaction perçue, mais la qualité intrinsèque du produit reste également déterminante dans les signaux exprimés par les avis clients.**
+> **Le rapport qualité-prix apparaît fréquemment parmi les avis classés positifs, tandis que plusieurs thèmes liés aux caractéristiques intrinsèques du produit sont également associés à des signaux positifs dans les avis clients.**  
 
 Ces résultats doivent être interprétés comme des **associations descriptives**. Les classifications `review_theme` et `review_sentiment` reposent sur une approche lexicale déterministe, validée dans Orange Data Mining sur un échantillon manuel de 400 avis avec **70 % de concordance** avec la référence humaine.
 
-
-#### 🔎 Observations
-
-Le nuage de points montre une forte concentration des produits dans une plage de ratings située principalement autour de **3,5 à 4,5**.
-
-La ligne de tendance présente une **légère pente positive**, suggérant que les produits dont le prix remisé est plus élevé tendent à obtenir des ratings légèrement supérieurs.
-
-Cependant, la dispersion importante des observations montre que cette relation reste limitée : des produits présentant des niveaux de prix similaires peuvent avoir des ratings différents, et les produits les plus chers ne sont pas systématiquement les mieux notés.
-
-Lors de l'exploration par catégorie, **Home & Kitchen** et **Electronics** apparaissaient particulièrement présentes parmi les produits situés au-dessus du prix remisé moyen. Cette observation reste descriptive et ne permet pas d'attribuer les différences de satisfaction au prix ou à la catégorie.
-
-Les mesures descriptives et analytiques ont ensuite été intégrées dans des visualisations Power BI afin d'explorer les relations entre prix, remises, satisfaction client, engagement et signaux de faiblesse produit.
-Les visualisations seront organisées autour des axes suivants :
-
-1. **Prix et satisfaction**
-2. **Effet d'aubaine vs qualité intrinsèque**
-3. **Remises et engagement client**
-4. **Identification des signaux de faiblesse**
-5. **Synthèse et recommandations**
 ---
 
 ### 9.4 🚨 Product Weakness Signals
@@ -1055,7 +1037,7 @@ Le thème **Defect / Problem** concentre ainsi le plus grand nombre d'avis class
 
 Ces résultats représentent des **volumes absolus d'avis négatifs**. Ils ne doivent donc pas être interprétés comme des taux de négativité propres à chaque thème.
 
-> **Les problèmes liés aux défauts constituent le principal thème observé parmi les avis classés négatifs dans ce dataset.**
+> **`Defect / Problem` présente le plus grand volume d'avis classés négatifs dans ce dataset, avec 488 avis.**
 
 #### 9.4.3 Negative Reviews by Main Category
 
@@ -1082,7 +1064,7 @@ Cette comparaison repose toutefois sur des **volumes absolus**. Une catégorie c
 Afin d'identifier des produits présentant plusieurs signaux de faiblesse simultanés, une sélection a été construite à partir de trois critères :
 
 - **Average Rating < 4,09** — note inférieure à la moyenne globale du dataset ;
-- **Rating Count > 4740**   — nombre d'évaluations supérieur à la médiane du dataset ;
+- **Rating Count > 4 740**   — nombre d'évaluations supérieur à la médiane du dataset ;
 - **Negative Reviews > Positive Reviews** — davantage d'avis textuels classés négatifs que positifs parmi les occurrences d'avis normalisées disponibles pour le produit.
 
 Le tableau présente ensuite, pour chaque produit retenu :
@@ -1300,17 +1282,14 @@ amazon-price-product-quality-analysis/
 - Analyse des 120 désaccords de classification
 - Création et interprétation des visualisations Power BI pour les axes 1 à 4
 - Synthèse des résultats et formulation des recommandations métier
-
-### 🔄 Finalisation
-
 - Vérification finale du README et de la structure du dépôt GitHub
 
-## 📈 15. Objectif Final
+## 📈 15. Résultat Final
 
-Le projet vise à construire un tableau de bord Power BI combinant :
+Le projet aboutit à une analyse Power BI combinant :
 
 **Prix + Remises + Satisfaction + Engagement + Thèmes des avis + Sentiment**
 
-afin d'obtenir une vision structurée des associations entre le positionnement tarifaire des produits, leur niveau d'engagement et les signaux de satisfaction ou d'insatisfaction exprimés dans les avis clients.
+afin de fournir une vision structurée des associations entre le positionnement tarifaire des produits, leur niveau d'engagement et les signaux de satisfaction ou d'insatisfaction exprimés dans les avis clients.
 
-L'objectif n'est pas d'établir des relations causales, mais d'identifier des **tendances, segments, anomalies et signaux exploitables pour l'analyse business**.
+L'analyse ne cherche pas à établir des relations causales, mais à identifier des **tendances, segments, anomalies et signaux exploitables pour l'analyse business**.
